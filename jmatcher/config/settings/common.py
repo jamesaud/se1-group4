@@ -46,6 +46,8 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     # custom users app
     'jmatcher.users.apps.UsersConfig',
+    'jmatcher.myapp.apps.MyappConfig',
+
     # Your stuff: custom apps go here
 )
 
