@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class MyappConfig(AppConfig):
-    name = 'jmatcher.myapp'
-    verbose_name = "Myapps"
+class ShipmentsConfig(AppConfig):
+    name = '{{YOURPROJECTNAME}}.django-starter-app'
+    verbose_name = "django-starter-app"
 
     def ready(self):
         """Override this to put in:
