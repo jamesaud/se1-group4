@@ -20,3 +20,9 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+
+
+class Employer(User):
+    company_name = models.CharField(blank=True, max_length=255)
+

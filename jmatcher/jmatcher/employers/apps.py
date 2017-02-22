@@ -1,9 +1,8 @@
 from django.apps import AppConfig
 
 
-class ShipmentsConfig(AppConfig):
-    name = '{{YOURPROJECTNAME}}.django-starter-app'
-    verbose_name = "django-starter-app"
+class EmployerConfig(AppConfig):
+    name = 'jmatcher.employers'
 
     def ready(self):
         """Override this to put in:
