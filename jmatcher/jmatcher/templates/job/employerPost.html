@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Employer{% endblock %}
+
+{% block content %}
+<div class="container">
+   <h2>Show Posts</h2>
+{% if jobs %}
+  <ul>
+    {% for job in jobs %}
+        <li><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a>
+          <h5>{{job.description}}
+          </h5>
+        </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p> No jobs have been posted. </p>>
+  {% endif %}
+
+</div>
+{% endblock content %}

@@ -11,6 +11,7 @@ from django.views import defaults as default_views
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^postJob/$', TemplateView.as_view(template_name='job/postJob.html'), name='postJob'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
@@ -18,6 +19,8 @@ urlpatterns = [
     # User management
     url(r'^users/', include('jmatcher.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^job/', include('jmatcher.job.urls', namespace='job')),
+    url(r'^company/', include('jmatcher.company.urls', namespace='company')),
 
     # Your stuff: custom urls includes go here
 
