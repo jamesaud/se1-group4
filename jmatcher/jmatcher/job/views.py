@@ -53,4 +53,10 @@ def postSuccess(request):
 
 
 def job_detail(request, job_id):
-    return HttpResponse("JOB DETAILS FOR " + str(job_id))
+    if request.method == 'GET':
+        context = {}
+        job_show_detail = Job.objects.get(pk = job_id);
+        context['job_show_detail'] = job_show_detail
+        return render(request, template_name= 'job/jobDetail.html', context = context)
+    else:
+        return render(request, template_name='job/employerPost.html')
