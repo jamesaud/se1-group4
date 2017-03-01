@@ -32,7 +32,7 @@ class Job(models.Model):
     industry =  models.CharField(max_length = 200, null = True, choices = INDUSTRY_TYPE)
     location = models.CharField(max_length=200, null= True, choices=LOCATION)
     experience = models.CharField(max_length = 200, null=True);
-    description = models.CharField(max_length=2000, null=True)
+    description = models.TextField(null=True)
     user = models.ForeignKey(User);
     created_at = models.DateTimeField(auto_now_add=True);
     updated_at = models.DateTimeField(auto_now_add=True);
