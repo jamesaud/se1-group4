@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     # custom users app
     'jmatcher.users.apps.UsersConfig',
+    'django_messages.apps.DjangoMessagesConfig',
     # Your stuff: custom apps go here
 )
 
@@ -255,3 +256,6 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+ALLOWED_HOSTS = ["*"]
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002

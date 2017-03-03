@@ -1,0 +1,3 @@
+Postgres is up - continuing...
+Requirement already satisfied: django-messages in /usr/local/lib/python3.5/site-packages
+Requirement already satisfied: Django in /usr/local/lib/python3.5/site-packages (from django-messages)
