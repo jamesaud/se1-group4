@@ -51,7 +51,6 @@ def employerPost(request):
 def postSuccess(request):
     return render(request, template_name='job/jobTest.html')
 
-
 def job_detail(request, job_id):
     if request.method == 'GET':
         context = {}

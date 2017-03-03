@@ -22,7 +22,7 @@ class User(AbstractUser):
         return reverse('users:detail', kwargs={'username': self.username})
 
     def is_employer(self):
-        return True if self.employer else False
+        return True if hasattr(self, 'employer') else False
 
 
 

@@ -18,7 +18,7 @@ def account_signup(request):
 class SignUp(SignupView):
 
     def form_valid(self, form):
-        response = super(SignUp, self).form_valid(form)
+        response = super().form_valid(form)
         employer = Employer(user=self.user)
         employer.save()
         return response
@@ -37,9 +37,4 @@ def update(request):
         return redirect('employers:home', username=request.user.username)
 
     return render(request, 'employers/employer_form.html', context={'form': form})
-
-
-
-
-
 

@@ -24,7 +24,7 @@ class Job(models.Model):
 
     EMPLOYMENT_TYPE = (
         ('INTERN', 'Intern'),
-        ('FULL TIME', "FULL TIME"),
+        ('FULL_TIME', "Full Time"),
     )
 
     post_name = models.CharField(max_length=200, null=True)
