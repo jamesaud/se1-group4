@@ -50,7 +50,11 @@
             <ul class="nav navbar-nav pull-xs-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+                  {% if request.user.is_employer %}
+                      <a class="nav-link" href="{% url 'employers:home' request.user.username  %}">{% trans "Employer Profile" %}</a>
+                  {% else %}
+                      <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+                  {% endif %}
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>

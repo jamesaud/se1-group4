@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+
 
 {% block content %}
-<h2>Employer</h2>
+<h2>Employer {{ object.company }}</h2>
+
+    <a href="{% url 'employers:update' %}">Update Employer</a>
+
+
 {% endblock content %}

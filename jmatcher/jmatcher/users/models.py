@@ -21,8 +21,12 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
 
+    def is_employer(self):
+        return True if self.employer else False
 
 
-class Employer(User):
-    company_name = models.CharField(blank=True, max_length=255)
+
+class Student(models.Model):
+    user = models.OneToOneField(User)
+2
 
