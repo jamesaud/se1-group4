@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<form action= "{% url 'job:employerPost' %}" method="POST"> {% csrf_token %}
+<h2>Hello Post Detail </h2>
+  <div class = "postDetail">
+    <h3>
+      post name:
+    {{job_show_detail.post_name}}
+    </h3>
+    <h5>
+      employment type:
+    {{job_show_detail.employment_type}}
+    </h5>
+    <h5>
+      industry:
+    {{job_show_detail.industry}}
+    </h5>
+    <h5>
+      location:
+    {{job_show_detail.location}}
+    </h5>
+    <h5>
+      experience:
+    {{job_show_detail.experience}}
+    </h5>
+    <h5>
+      description:
+    {{job_show_detail.description}}
+    </h5>
+    <input type = "submit" value = "RETURN TO POST PAGE">
+  </div>
+{% endblock content %}

@@ -48,7 +48,8 @@ LOCAL_APPS = (
     # custom users app
     'jmatcher.users.apps.UsersConfig',
     'jmatcher.employers.apps.EmployerConfig',
-
+    'jmatcher.job.apps.JobConfig',
+    'jmatcher.company.apps.CompanyConfig',
     # Your stuff: custom apps go here
 )
 

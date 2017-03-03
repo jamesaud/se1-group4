@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action= "{% url 'job:postJob' %}" method="POST"> {% csrf_token %}
+<h2>Hello Post Job </h2>
+  <div class = "jobPost">
+    {{employer | crispy}}
+  </div>
+  <input type = "submit" value = "submit">
+</form>
+{% endblock content %}
+
+
