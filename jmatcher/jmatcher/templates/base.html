@@ -50,13 +50,13 @@
             <ul class="nav navbar-nav pull-xs-right">
 
               {% if request.user.is_authenticated %}
-                                         <li class="nav-item">
+                        <li class="nav-item">
                           <a class="nav-link" href="{% url 'users:list' %}">Find Students</a>
                         </li>
 
                   {% if request.user.is_employer %}
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'job:postJob' %}">Post a Job</a>
+                          <a class="nav-link" href="{% url 'job:postJob' %}">Post Job</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="{% url 'job:employerPost' %}">Show Posts</a>
@@ -68,6 +68,9 @@
 
                    {% endif %}
 
+                  <li class="nav-item">
+                          <a class="nav-link" href="{% url 'messages_inbox' %}">Messages</a>
+                  </li>
 
                   <li class="nav-item">
                           {% if request.user.is_employer %}
@@ -77,9 +80,12 @@
                           {% endif %}
                     </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-                </li>
+
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+                    </li>
+
               {% else %}
 
                 <li class="nav-item">

@@ -4,6 +4,7 @@
     <h2>
     {{job_show_detail.post_name}}
     </h2>
+      <p>Posted By <a href="{% url 'employers:home' job_show_detail.user.username %}">{{ job_show_detail.user.employer.company_name }}</a></p>
     <br>
     <p>
       Employment Type:

@@ -2,6 +2,8 @@
 {% load i18n %}
 
 {% block content %}
+
+    {{ block.super }}
 <h1>{% trans "View Message" %}</h1>
 <dl class="message-headers">
     <dt>{% trans "Subject" %}</dt>
