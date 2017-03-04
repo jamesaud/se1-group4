@@ -24,7 +24,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
             return reverse('employers:home',
                            kwargs={'username': self.request.user.username})
         else:
-            return reverse('users:detail',
+            return reverse('students:home',
                            kwargs={'username': self.request.user.username})
 
 

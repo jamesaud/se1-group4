@@ -5,8 +5,7 @@ from django.db import models
 from django import forms
 
 # Create your models here.
-from jmatcher.company.models import Company
-from jmatcher.users.models import User
+from jmatcher.users.models import User, Skill
 
 
 class Job(models.Model):
@@ -33,7 +32,8 @@ class Job(models.Model):
     location = models.CharField(max_length=200, null= True, choices=LOCATION)
     experience = models.CharField(max_length = 200, null=True);
     description = models.TextField(null=True)
-    user = models.ForeignKey(User);
+    user = models.ForeignKey(User)
+    skills = models.ManyToManyField(Skill, null=True)
     created_at = models.DateTimeField(auto_now_add=True);
     updated_at = models.DateTimeField(auto_now_add=True);
 

@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^users/', include('jmatcher.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^job/', include('jmatcher.job.urls', namespace='job')),
-    url(r'^company/', include('jmatcher.company.urls', namespace='company')),
+    url(r'^students/', include('jmatcher.students.urls', namespace='students')),
 
     # Your stuff: custom urls includes go here
     url(r'^employers/', include('jmatcher.employers.urls', namespace='employers')),

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Job Matches For You</h2>
+    <br>
+  {% if jobs %}
+      <ul class="list-group">
+        {% for job in jobs %}
+            <li class="list-group-item">
+                <a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a>
+                <p class="d-inlin">{{job.description}}</p>
+
+             <p class="text-success">74% Match</p>
+
+            </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p> No jobs have been posted. </p>>
+  {% endif %}
+
+
+
+{% endblock content %}

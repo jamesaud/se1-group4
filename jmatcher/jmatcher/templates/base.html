@@ -48,29 +48,42 @@
             </ul>
 
             <ul class="nav navbar-nav pull-xs-right">
-              {% if request.user.is_authenticated %}
-                  {% if request.user.is_employer %}
 
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'job:postJob' %}">Post a Job</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'job:employerPost' %}">Show My Post</a>
-                </li>
-                  {% endif %}
-                <li class="nav-item">
+              {% if request.user.is_authenticated %}
+                                         <li class="nav-item">
+                          <a class="nav-link" href="{% url 'users:list' %}">Find Students</a>
+                        </li>
+
                   {% if request.user.is_employer %}
-                      <a class="nav-link" href="{% url 'employers:home' request.user.username  %}">{% trans "Employer Profile" %}</a>
-                  {% else %}
-                      <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-                  {% endif %}
-                </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'job:postJob' %}">Post a Job</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'job:employerPost' %}">Show Posts</a>
+                        </li>
+                      {% else %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'job:jobList' %}">All Jobs</a>
+                        </li>
+
+                   {% endif %}
+
+
+                  <li class="nav-item">
+                          {% if request.user.is_employer %}
+                              <a class="nav-link" href="{% url 'employers:home' request.user.username  %}">{% trans "Employer Profile" %}</a>
+                          {% else %}
+                              <a class="nav-link" href="{% url 'students:home' request.user.username  %}">{% trans "My Profile" %}</a>
+                          {% endif %}
+                    </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
                 </li>
               {% else %}
+
                 <li class="nav-item">
-                  <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+                  <a id="sign-up-link" class="nav-link" href="{% url 'students:account_signup' %}">{% trans "Student Sign Up" %}</a>
                 </li>
                   <li class="nav-item">
                   <a id="sign-up-link" class="nav-link" href="{% url 'employers:account_signup' %}">{% trans "Employer Sign Up" %}</a>

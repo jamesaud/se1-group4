@@ -13,6 +13,10 @@ urlpatterns = [
         view=views.postJob,
         name='postJob'),
 
+    url(r'^jobList/$',
+        view=views.listJob,
+        name='jobList'),
+
     url(r'^employerPost/$',
         view = views.employerPost,
         name = 'employerPost'),

@@ -3,9 +3,28 @@
 
 
 {% block content %}
-<h2>Employer {{ object.company }}</h2>
-
+    <h2>{{ object.company_name }}</h2>
+    <br>
     <a href="{% url 'employers:update' %}">Update Employer</a>
+    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
+    <br><br><br>
+    {% if object.company_name %}
+    <ul class="list-group">
+        <li class="list-group-item">
+            <strong>Name:</strong> {{ object.company_name }}
+        </li>
 
+        <li class="list-group-item">
+            <strong>Website</strong>: {{ object.website }}
+        </li>
+
+        <li class="list-group-item">
+            <strong>Size</strong>: {{ object.size }}
+        </li>
+        <li class="list-group-item">
+            <strong>Description</strong>: {{ object.description }}
+        </li>
+    </ul>
+    {% endif %}
 
 {% endblock content %}

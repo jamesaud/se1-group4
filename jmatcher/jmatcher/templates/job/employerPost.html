@@ -4,18 +4,19 @@
 
 {% block content %}
 <div class="container">
-   <h5>Show Posts</h5>
+   <h2>My Job Posts</h2>
+<br>
 {% if jobs %}
-  <ul>
+  <ul class="list-group">
     {% for job in jobs %}
-        <li><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a>
-          <h5>{{job.description}}
-          </h5>
+        <li class="list-group-item">
+            <a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a>
+          <p>{{job.description}}</p>
         </li>
     {% endfor %}
   </ul>
   {% else %}
-  <p> No jobs have been posted. </p>>
+  <p> No jobs have been posted. </p>
   {% endif %}
 
 </div>

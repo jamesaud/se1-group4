@@ -2,9 +2,9 @@ from django.db import models
 from jmatcher.users.models import User
 from address.models import AddressField
 SIZE_CHOICES = (
-    ('0', '1-50'),
-    ('1', '51-100'),
-    ('2', '101-1000'),
+    ('1-50', '1-50'),
+    ('51-100', '51-100'),
+    ('101-1000', '101-1000'),
 )
 
 

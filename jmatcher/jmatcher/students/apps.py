@@ -1,9 +1,8 @@
 from django.apps import AppConfig
 
 
-class CompanyConfig(AppConfig):
-    name = 'jmatcher.company'
-    verbose_name = "company"
+class StudentConfig(AppConfig):
+    name = 'jmatcher.students'
 
     def ready(self):
         """Override this to put in:

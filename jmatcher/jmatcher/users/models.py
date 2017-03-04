@@ -14,6 +14,8 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
+    #location = models.OneToOneField(Location)
+    connections = models.ManyToManyField("self")
 
     def __str__(self):
         return self.username
@@ -24,9 +26,21 @@ class User(AbstractUser):
     def is_employer(self):
         return True if hasattr(self, 'employer') else False
 
+    def is_student(self):
+        return True if hasattr(self, 'student') else False
 
 
-class Student(models.Model):
-    user = models.OneToOneField(User)
-2
 
+
+SKILL_CHOICES = (
+    ('Django', 'Django'),
+    ('Python', 'Python'),
+    ('Java', 'Java'),
+    ('Ruby', 'Ruby'),
+)
+
+class Skill(models.Model):
+    skill = models.CharField(max_length=255, choices=SKILL_CHOICES)
+
+    def __str__(self):
+        return self.skill

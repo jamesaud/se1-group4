@@ -25,7 +25,8 @@ class SignUp(SignupView):
 
 
 def home(request, username):
-    return render(request, 'employers/home.html')
+    object = request.user.employer
+    return render(request, 'employers/home.html', context={'object':object})
 
 
 def update(request):

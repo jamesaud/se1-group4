@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
 from django.http import HttpResponse
+from django.contrib import messages
 
 from .jobForm import jobForm
 
@@ -10,6 +11,11 @@ from .models import Job
 
 def jobTest(request):
     return render(request, template_name= 'job/jobTest.html')
+
+
+def listJob(request):
+    jobs = Job.objects.all()
+    return render(request, 'job/jobList.html', context={'jobs':jobs})
 
 def postJob(request):
     form = jobForm()
@@ -24,6 +30,7 @@ def postJob(request):
         # Redirect to the success url
 
             form = jobForm(request.POST)
+
             if form.is_valid():
                 newJob = Job(post_name = form.cleaned_data['post_name'],
                              employment_type = form.cleaned_data['employment_type'],
@@ -32,9 +39,16 @@ def postJob(request):
                              experience=form.cleaned_data['experience'],
                              description = form.cleaned_data['description'],
                              user = request.user)
+
+
                 newJob.save()
-                # return HttpResponse("You submit it successfully!!!")
-                return render(request, template_name='job/postSuccess.html')
+
+                for skill in form.cleaned_data['skills']:
+                    newJob.skills.add(skill)
+                newJob.save()
+
+                messages.add_message(request, messages.SUCCESS, 'Successfully Added Job.')
+                return redirect('job:job_detail', job_id=newJob.id)
 
             else:
                 context = {}
