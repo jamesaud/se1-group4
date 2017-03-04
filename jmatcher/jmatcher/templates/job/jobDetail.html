@@ -4,26 +4,37 @@
     <h2>
     {{job_show_detail.post_name}}
     </h2>
+    <br>
     <p>
-      employment type:
+      Employment Type:
     {{job_show_detail.employment_type}}
     </p>
     <p>
-      industry:
+      Industry:
     {{job_show_detail.industry}}
     </p>
     <p>
-      location:
+      Location:
     {{job_show_detail.location}}
     </p>
     <p>
-      experience:
+      Experience:
     {{job_show_detail.experience}}
     </p>
     <p>
-      description:
+      Description:
     {{job_show_detail.description}}
     </p>
+
+    <p>
+      Skills:
+      {% for skill in job_show_detail.skills.all %}
+        {{skill.skill}}
+        {% empty %}
+        No skills required.
+      {% endfor %}
+    </p>
+
       <a href="{% if request.user.is_employer %}{% url 'job:employerPost' %}{% else %}{% url 'job:jobList' %}{% endif %}">
           Return to Jobs</a>
   </div>
