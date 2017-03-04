@@ -21,9 +21,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    url(r'^employers/', include('jmatcher.employers.urls', namespace='employers')),
-
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^posts/', include('jmatcher.posts.urls', namespace='posts'))
+    ]
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

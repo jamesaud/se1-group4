@@ -204,3 +204,4 @@ ADMIN_URL = env('DJANGO_ADMIN_URL')
 
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+ALLOWED_HOSTS = ['192.168.99.100:8000']

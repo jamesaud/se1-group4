@@ -46,7 +46,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     # custom users app
     'jmatcher.users.apps.UsersConfig',
-    'jmatcher.employers.apps.EmployerConfig',
+    'jmatcher.posts.apps.PostsConfig',
 
     # Your stuff: custom apps go here
 )
@@ -254,3 +254,5 @@ STATICFILES_FINDERS += ("compressor.finders.CompressorFinder", )
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
+
+ALLOWED_HOSTS = ['*']

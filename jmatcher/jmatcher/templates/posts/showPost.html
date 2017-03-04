@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container">
+		<h1>Post Page</h1>
+		<h3>Description: {{post_detail.description}}</h3>
+		<a href="{% url 'posts:get_all_posts'%}">Return to all posts</a>
+	</div>
+{% endblock content %}
+{% block javascript %}
+{{block.super}}
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock javascript %}
