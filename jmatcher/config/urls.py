@@ -22,11 +22,12 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^job/', include('jmatcher.job.urls', namespace='job')),
     url(r'^students/', include('jmatcher.students.urls', namespace='students')),
-    url(r'^messages/', include('django_messages.urls')),
-    # Your stuff: custom urls includes go here
     url(r'^employers/', include('jmatcher.employers.urls', namespace='employers')),
 
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^messages/', include('django_messages.urls')),
+    # Your stuff: custom urls includes go here
+    url(r'^posts/', include('jmatcher.posts.urls', namespace='posts'))
+    ]
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

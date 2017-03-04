@@ -51,6 +51,8 @@ LOCAL_APPS = (
     'jmatcher.students.apps.StudentConfig',
     'jmatcher.job.apps.JobConfig',
     'django_messages.apps.DjangoMessagesConfig',
+    'jmatcher.posts.apps.PostsConfig',
+
     # Your stuff: custom apps go here
 )
 
