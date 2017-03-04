@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import PostForm
 from .models import Post
+from django.shortcuts import redirect
 
 def home(request):
     return render(request, 'posts/home.html')
@@ -14,10 +15,10 @@ def post_status(request):
 		if form.is_valid():
 			post = Post(description=form.cleaned_data['description'], user=request.user)
 			post.save()
-			return render(request, 'posts/home.html')
+			return redirect("posts:get_all_posts")
 		else:
 			return HttpResponse("There is an error")
-	else:		
+	else:
 		form = PostForm()
 		context = {
 		"form": form,
@@ -27,7 +28,7 @@ def post_status(request):
 def get_all_posts(request):
 	user = request.user
 	context = {}
-	posts = user.post_set.all()
+	posts = Post.objects.all()
 	context['posts'] = posts
 	return render(request, "posts/showAllPosts.html", context)
 

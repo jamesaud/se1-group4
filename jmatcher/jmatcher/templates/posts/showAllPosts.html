@@ -5,13 +5,19 @@
 	<div class="container">
 		<h1>Show Posts</h1>
 
-		<a href="{% url 'posts:post_status' %}">Create New Post</a>
+		<a href="{% url 'posts:post_status' %}" class='btn btn-primary'>Create New Post</a>
+		<br>
+		<br>
 		{% if posts %}
-			<ul>
+			<ul class='list-group'>
 				{% for post in posts %}
-					<li>
-						<a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a>
+					<li class='list-group-item'>
+						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5>
+						<p>Posted by: 
+							<a href="{% url 'students:home' post.user.username %}">{{post.description}}</a>
+						</p>
 					</li>
+					<br>
 				{% endfor %}
 			</ul>
 		{% else %}
