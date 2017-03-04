@@ -5,8 +5,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^job/', include('jmatcher.job.urls', namespace='job')),
     url(r'^students/', include('jmatcher.students.urls', namespace='students')),
-
+    url(r'^messages/', include('django_messages.urls')),
     # Your stuff: custom urls includes go here
     url(r'^employers/', include('jmatcher.employers.urls', namespace='employers')),
 

@@ -50,6 +50,7 @@ LOCAL_APPS = (
     'jmatcher.employers.apps.EmployerConfig',
     'jmatcher.students.apps.StudentConfig',
     'jmatcher.job.apps.JobConfig',
+    'django_messages.apps.DjangoMessagesConfig',
     # Your stuff: custom apps go here
 )
 
@@ -257,3 +258,10 @@ STATICFILES_FINDERS += ("compressor.finders.CompressorFinder", )
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
+
+
+# Your common stuff: Below this line define 3rd party library settings
+# ------------------------------------------------------------------------------
+ALLOWED_HOSTS = ["*"]
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002

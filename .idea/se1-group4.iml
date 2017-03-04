@@ -14,7 +14,11 @@
     </option>
   </component>
   <component name="TestRunnerService">
+<<<<<<< HEAD
     <option name="projectConfiguration" value="Nosetests" />
     <option name="PROJECT_TEST_RUNNER" value="Nosetests" />
+=======
+    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
+>>>>>>> origin/Bhavik
   </component>
 </module>
