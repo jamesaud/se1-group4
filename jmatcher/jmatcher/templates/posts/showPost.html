@@ -5,11 +5,20 @@
 	<div class="container">
 		<h1>Post Page</h1>
 		<h3>Description: {{post_detail.description}}</h3>
+		<form class="form-horizontal" method="post" action="{% url 'posts:get_post' post_detail.id %}">
+    	{% csrf_token %}
+		{{comment_form | crispy}}
+		<div class="control-group">
+	      	<div class="controls">
+	        <button type="submit" class="btn">Submit</button>
+	        </div>
+        </div>
+        </form>
+        {% for comment in post_detail.postcomments_set.all %}
+					<li>
+						{{comment.comment}}
+					</li>
+		{% endfor %}
 		<a href="{% url 'posts:get_all_posts'%}">Return to all posts</a>
 	</div>
 {% endblock content %}
-{% block javascript %}
-{{block.super}}
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<script src="{% static 'js/app.js' %}"></script>
-{% endblock javascript %}
