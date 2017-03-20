@@ -5,9 +5,11 @@
 {% block content %}
     <h2>{{ object.company_name }}</h2>
     <br>
+    {%  if request.user is object.user %}
     <a href="{% url 'employers:update' %}">Update Employer</a>
     <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
     <br><br><br>
+    {% endif %}
     {% if object.company_name %}
     <ul class="list-group">
         <li class="list-group-item">

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from allauth.account.forms import SignupForm
 from allauth.account.views import SignupView
 from .models import Employer
+from jmatcher.users.models import User
 from .forms import EmployerForm
 from django.shortcuts import redirect
 
@@ -25,7 +26,7 @@ class SignUp(SignupView):
 
 
 def home(request, username):
-    object = request.user.employer
+    object = User.objects.get(username=username).employer
     return render(request, 'employers/home.html', context={'object':object})
 
 
