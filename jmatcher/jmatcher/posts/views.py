@@ -48,13 +48,13 @@ def get_post(request, post_id):
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 
-# def post_comments(request, post_id):
-# 	if request.method == "POST":
-# 		comment_form = CommentForm(request.POST)
-# 		if comment_form.is_valid():
-# 			post = Post.objects.get(pk=post_id)
-# 			comment = PostComments(commenting_user=request.user, post=post, comment=comment_form.cleaned_data['comment'])
-# 			comment.save()
+def post_comments(request, post_id):
+	if request.method == "POST":
+		comment_form = CommentForm(request.POST)
+		if comment_form.is_valid():
+			post = Post.objects.get(pk=post_id)
+			comment = PostComments(commenting_user=request.user, post=post, comment=comment_form.cleaned_data['comment'])
+			comment.save()
 
 
 
