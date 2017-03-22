@@ -4,3 +4,6 @@ https://indiana-my.sharepoint.com/personal/jamaudre_iu_edu/_layouts/15/guestacce
 
 
 https://github.com/furious-luke/django-address
+
+
+JQUERY: https://gist.github.com/jamesaud/2310e95c64bbc6660d8208e7718960ed
