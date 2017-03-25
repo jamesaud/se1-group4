@@ -1,17 +1,15 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags static %}
 
 
 {% block content %}
-    <h2>{{ object.company_name }}</h2>
-    <br>
-    {%  if request.user == object.user %}
-    <a href="{% url 'employers:update' %}">Update Employer</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-    <br><br><br>
-    {% endif %}
+
+{% include 'users/snippets/profile_info.html' with profile_image=object.user.image.url user=object.user name=object.company_name update_url='employers:update' %}
+
     {% if object.company_name %}
     <ul class="list-group">
+             <li class="list-group-item"> <h2>Company Info</h2></li>
+
         <li class="list-group-item">
             <strong>Name:</strong> {{ object.company_name }}
         </li>
@@ -29,4 +27,23 @@
     </ul>
     {% endif %}
 
+    <br>
+    <ul class="list-group">
+    {% if jobs %}
+
+         <li class="list-group-item"> <h2>Current Job Openings</h2></li>
+
+        {% for job in jobs %}
+            <li class="list-group-item">
+                <a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a>
+              <p>{{job.description}}</p>
+            </li>
+        {% endfor %}
+  {% else %}
+        <li class="list-group-item"> <h2> No jobs have been posted yet. </h2></li>
+  {% endif %}
+      </ul>
+
+</div>
+<br>
 {% endblock content %}

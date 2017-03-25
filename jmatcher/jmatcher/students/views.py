@@ -7,6 +7,11 @@ from django.shortcuts import redirect
 from jmatcher.users.forms import UserForm
 from jmatcher.users.models import Skill, User
 
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView, TemplateView
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 def index(request):
     return HttpResponse("MADE IT!")
 
@@ -27,6 +32,11 @@ class SignUp(SignupView):
         return response
 
 
+
+
+def students(request):
+    return render(request, 'students/student_list.html', context={'student_list':Student.objects.exclude(skills__isnull=True)})
+
 def home(request, username):
     student = User.objects.get(username=username).student
     return render(request, 'students/home.html', context={'object': student})
@@ -35,7 +45,7 @@ def home(request, username):
 def update(request):
     form = StudentForm(request.POST or None, instance = request.user.student)
 
-    user_form = UserForm(request.POST or None, instance=request.user)
+    user_form = UserForm(request.POST or None, request.FILES or None, instance=request.user)
     if (request.method == 'POST') and form.is_valid() and user_form.is_valid():
         skills = form.cleaned_data['skills']
 
@@ -44,6 +54,8 @@ def update(request):
 
         for key, value in user_form.cleaned_data.items():
             setattr(request.user, key, value)
+
+        request.user.image = user_form.cleaned_data['image']
 
         for skill in skills:
             request.user.student.skills.add(skill)
@@ -54,5 +66,5 @@ def update(request):
         return redirect('students:home', username=request.user.username)
 
     return render(request, 'students/student_form.html', context={'form': form,
-                                                                  'user_form':user_form})
+                                                                  'user_form': user_form})
 

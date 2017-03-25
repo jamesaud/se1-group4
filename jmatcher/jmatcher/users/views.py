@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import HttpResponse, redirect
+from django.contrib import messages
 
 from .models import User
 
@@ -14,6 +16,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
@@ -50,3 +54,34 @@ class UserListView(LoginRequiredMixin, ListView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+
+
+
+def ajaxview(request):
+    if request.method == 'POST':
+        return HttpResponse(request.POST.items())
+
+
+def follow(request, username):
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        request.user.connections.add(user)
+        request.user.save()
+        messages.success(request, 'Following ' + str(user))
+        if request.GET.get('redirect_url'):
+            return redirect(request.GET.get('redirect_url'))
+        else:
+            return redirect(user.get_absolute_url())
+
+def unfollow(request, username):
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        request.user.connections.remove(user)
+        request.user.save()
+        messages.success(request, 'Unfollowed ' + str(user))
+        if request.GET.get('redirect_url'):
+            return redirect(request.GET.get('redirect_url'))
+        else:
+            return redirect(user.get_absolute_url())
+

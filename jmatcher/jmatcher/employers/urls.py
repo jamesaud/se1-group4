@@ -30,6 +30,10 @@ urlpatterns = [
         view=views.home,
         name='home'
     ),
-
+    url(
+        regex=r'^~list/$',
+        view=views.list,
+        name='list'
+    ),
 
 ]

@@ -8,6 +8,7 @@ SIZE_CHOICES = (
 )
 
 
+
 class Employer(models.Model):
 
     user = models.OneToOneField(User)

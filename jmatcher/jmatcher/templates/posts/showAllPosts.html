@@ -1,8 +1,7 @@
-{% extends "base.html" %}
+{% extends "base_profile.html" %}
 {% load crispy_forms_tags %}
 
 {% block content %}
-	<div class="container">
 		<h1>Show Posts</h1>
 
 		<a href="{% url 'posts:post_status' %}" class='btn btn-primary'>Create New Post</a>
@@ -13,7 +12,7 @@
 				{% for post in posts %}
 					<li class='list-group-item'>
 						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5>
-						<p>Posted by: 
+						<p>Posted by:
 							<a href="{% url 'students:home' post.user.username %}">{{post.description}}</a>
 						</p>
 					</li>
@@ -23,5 +22,4 @@
 		{% else %}
 			<p>No posts found</p>
 		{% endif %}
-	</div>
 {% endblock content %}

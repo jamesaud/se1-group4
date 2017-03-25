@@ -26,4 +26,19 @@ urlpatterns = [
         view=views.UserUpdateView.as_view(),
         name='update'
     ),
+    url(
+        regex=r'^~endpoint/$',
+        view=views.ajaxview,
+        name='ajax'
+    ),
+    url(
+        regex=r'^~follow/(?P<username>[\w.@+-]+)/$',
+        view=views.follow,
+        name='follow'
+    ),
+url(
+        regex=r'^~unfollow/(?P<username>[\w.@+-]+)/$',
+        view=views.unfollow,
+        name='unfollow'
+    ),
 ]

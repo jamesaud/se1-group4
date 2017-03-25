@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
     url(r'^postJob/$', TemplateView.as_view(template_name='job/postJob.html'), name='postJob'),
+    url(r'^test/$', TemplateView.as_view(template_name='test.html'), name='test'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
@@ -30,6 +31,9 @@ urlpatterns = [
     ]
 
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
@@ -43,4 +47,6 @@ if settings.DEBUG:
 
         urlpatterns += [
             url(r'^__debug__/', include(debug_toolbar.urls)),
-        ]
+            ]
+
+

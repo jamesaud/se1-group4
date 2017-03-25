@@ -21,6 +21,9 @@
     {% compress css %}
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+    <link href="{% static 'css/toolkit.css' %}" rel="stylesheet">
+
     {% endcompress %}
     {% endblock %}
 
@@ -48,16 +51,17 @@
                 {% endif %}
                 ">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
+
             </ul>
 
             <ul class="nav navbar-nav pull-xs-right">
 
               {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'users:list' %}">Find Students</a>
+                          <a class="nav-link" href="{% url 'students:list' %}">Find Students</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'employers:list' %}">Find Employers</a>
                         </li>
 
                   {% if request.user.is_employer %}
@@ -118,9 +122,11 @@
           {% endfor %}
       {% endif %}
 
+    {%  block content-wrapper %}
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
+    {%  endblock content-wrapper %}
 
     </div> <!-- /container -->
 

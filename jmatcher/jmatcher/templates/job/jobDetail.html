@@ -1,42 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
   <div class = "postDetail">
+  <br>
     <h2>
     {{job_show_detail.post_name}}
     </h2>
-      <p>Posted By <a href="{% url 'employers:home' job_show_detail.user.username %}">{{ job_show_detail.user.employer.company_name }}</a></p>
-    <br>
-    <p>
+<br>
+    <ul class="list-group">
+        <li class='list-group-item list-group-item-warning'><h4>Posted By: <a href="{% url 'employers:home' job_show_detail.user.username %}">{{ job_show_detail.user.employer.company_name }}</a></h4></li>
+    <li class='list-group-item'>
       Employment Type:
     {{job_show_detail.employment_type}}
-    </p>
-    <p>
+    </li>
+    <li class='list-group-item'>
       Industry:
     {{job_show_detail.industry}}
-    </p>
-    <p>
+    </li>
+    <li class='list-group-item'>
       Location:
     {{job_show_detail.location}}
-    </p>
-    <p>
+    </li>
+    <li class='list-group-item'>
       Experience:
     {{job_show_detail.experience}}
-    </p>
-    <p>
+    </li>
+    <li class='list-group-item'>
       Description:
     {{job_show_detail.description}}
-    </p>
+    </li>
 
-    <p>
+    <li class='list-group-item'>
       Skills:
       {% for skill in job_show_detail.skills.all %}
         {{skill.skill}}
         {% empty %}
         No skills required.
       {% endfor %}
-    </p>
-
-      <a href="{% if request.user.is_employer %}{% url 'job:employerPost' %}{% else %}{% url 'job:jobList' %}{% endif %}">
+    </li>
+    </ul>
+<br>
+      <a class="btn btn-primary" href="{% if request.user.is_employer %}{% url 'job:employerPost' %}{% else %}{% url 'job:jobList' %}{% endif %}">
           Return to Jobs</a>
+
   </div>
 {% endblock content %}

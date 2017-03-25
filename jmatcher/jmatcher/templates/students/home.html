@@ -1,26 +1,25 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags static %}
 
 
 {% block content %}
-<h2>Student {{ object.username }}</h2>
-    <br>
-    {% if object.user == request.user %}
-        <a href="{% url 'students:update' %}">Update Student</a>
-        <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-            <br>
-            <br>
-    {% endif %}
-    <br>
+{% include 'users/snippets/profile_info.html' with user=object.user name=object.user.get_full_name update_url='students:update' %}
 
     {% if object.user.first_name %}
     <ul class="list-group">
+        <li class="list-group-item">
+            <h2>User Information</h2>
+        </li>
 
         <li class="list-group-item">
             <strong>First Name: </strong>{{ object.user.first_name }}
         </li>
         <li class="list-group-item">
             <strong>Last Name:</strong> {{ object.user.last_name }}
+        </li>
+        <li class="list-group-item">
+
+            <strong>Looking For:</strong> {{ object.position|default_if_none:'None' }}
         </li>
         <li class="list-group-item">
             <p><strong>Skills:</strong>
@@ -33,5 +32,6 @@
 
     </ul>
     {% endif %}
+    <br>
 
 {% endblock content %}
