@@ -32,15 +32,8 @@
                       <ul class="bqs">
                         <li class="bqt">
                           <a href="#userModal" class="bph" data-toggle="modal">
-                            Following
+                            Connections
                             <h6 class="afl">{{ request.user.connections.count }}</h6>
-                          </a>
-                        </li>
-
-                        <li class="bqt">
-                          <a href="#userModal" class="bph" data-toggle="modal">
-                            Followers
-                            <h6 class="afl">{{ request.user.get_followers.count }}</h6>
                           </a>
                         </li>
                       </ul>
@@ -49,14 +42,15 @@
 
                   <div class="rp bra brb agk">
                     <div class="rq">
-                      <h6 class="agd">About</h6>
-                      <ul class="dc ayn">
+                      <h6 class="agd">About Me</h6>
+                        <i>{{ request.user.short_description }}</i>
+                      <!--<ul class="dc ayn">
                         <li><span class="axr h bbu agc"></span>Went to <a href="#">Oh, Canada</a>
                         <li><span class="axr h boj agc"></span>Became friends with <a href="#">Obama</a>
                         <li><span class="axr h bgh agc"></span>Worked at <a href="#">Github</a>
                         <li><span class="axr h bgx agc"></span>Lives in <a href="#">San Francisco, CA</a>
                         <li><span class="axr h big agc"></span>From <a href="#">Seattle, WA</a>
-                      </ul>
+                      </ul>-->
                     </div>
                   </div>
 

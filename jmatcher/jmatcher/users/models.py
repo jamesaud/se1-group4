@@ -31,8 +31,6 @@ class User(AbstractUser):
             return reverse('students:home', kwargs={'username': self.username})
 
 
-    def get_followers(self):
-        return User.objects.filter(connections__in=[self])
 
     def is_employer(self):
         return True if hasattr(self, 'employer') else False
