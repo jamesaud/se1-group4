@@ -6,7 +6,7 @@
 {% block content %}
 <h2>Updating {{ request.user.employer.company_name }}</h2>
     <br>
-          <img src="{{ user_form.instance.image.url }}" class="img-thumbnail" style="max-height: 300px;">
+          <img src="{{ user_form.instance.get_image_url }}" class="img-thumbnail" style="max-height: 300px;">
 <br><br>
   <form class="form-horizontal" method="post" action="{% url 'employers:update' %}" enctype="multipart/form-data">
       {% csrf_token %}

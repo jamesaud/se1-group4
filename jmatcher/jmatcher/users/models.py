@@ -17,8 +17,8 @@ class User(AbstractUser):
     #location = models.OneToOneField(Location)
     connections = models.ManyToManyField("self", null=True)
 
-    image = models.ImageField(blank=True, null=True, default='url/url.com')
-    background = models.ImageField(blank=True, null=True, default='url/url.com')
+    image = models.ImageField(blank=True, null=True)
+    background = models.ImageField(blank=True, null=True)
     short_description = models.CharField(blank=True, null=True, max_length=90)
 
     def __str__(self):
@@ -36,6 +36,18 @@ class User(AbstractUser):
 
     def is_student(self):
         return True if hasattr(self, 'student') else False
+
+    def get_image_url(self):
+        try:
+            return self.image.url
+        except ValueError:
+            return 'https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg'
+
+    def get_background_url(self):
+        try:
+            return self.image.url
+        except ValueError:
+            return 'http://www.planwallpaper.com/static/images/10e39f13ddfb80570f3e44fb2016cb76.jpg'
 
     def get_name(self):
         if self.is_employer():

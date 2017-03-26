@@ -4,7 +4,7 @@
 
 {% block content %}
 
-{% include 'users/snippets/profile_info.html' with profile_image=object.user.image.url user=object.user name=object.company_name update_url='employers:update' %}
+{% include 'users/snippets/profile_info.html' with profile_image=object.user.get_image_url user=object.user name=object.company_name update_url='employers:update' %}
 
     {% if object.company_name %}
     <ul class="list-group">

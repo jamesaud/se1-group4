@@ -10,24 +10,24 @@
                 {% block sidebar %}
 
                   <div class="rp bqq agk">
-                    <div class="rv" style="background-image: url({{request.user.background.url}});"></div>
+                    <div class="rv" style="background-image: url({{request.user.get_background_url}});"></div>
                     <div class="rq awx">
-                      <a href="profile/index.html">
+                      <a href="{{ request.user.get_absolute_url }}">
                         <img
                           class="bqr"
-                          src="{{ request.user.image.url }}">
+                          src="{{ request.user.get_image_url }}">
                       </a>
 
                       <h6 class="rr">
                           {% if request.user.is_employer %}
                             <a class="bph" href="profile/index.html">{{request.user.employer.company_name}}</a>
                           {% elif request.user.is_student %}
-                              <a class="bph" href="profile/index.html">{{request.user.get_full_name}}</a>
+                              <a class="bph" href="profile/index.html">{{request.user.get_name}}</a>
 
                           {% endif %}
                       </h6>
 
-                      <p class="agk">I wish i was a little bit taller, wish i was a baller, wish i had a girl… also.</p>
+                      <p class="agk">{{ request.user.short_description }}</p>
 
                       <ul class="bqs">
                         <li class="bqt">
@@ -43,6 +43,7 @@
                   <div class="rp bra brb agk">
                     <div class="rq">
                       <h6 class="agd">About Me</h6>
+
                         <i>{{ request.user.short_description }}</i>
                       <!--<ul class="dc ayn">
                         <li><span class="axr h bbu agc"></span>Went to <a href="#">Oh, Canada</a>

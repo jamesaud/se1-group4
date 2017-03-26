@@ -8,6 +8,8 @@ from .utils import get_query
 from .jobForm import jobForm
 from django.template import RequestContext
 from jmatcher.employers.models import Employer
+from django.contrib import messages
+
 
 from .models import Job
 
@@ -80,7 +82,8 @@ def job_detail(request, job_id):
 def jobDelete(request, job_id):
         job = Job.objects.get(pk = job_id)
         job.delete()
-        return HttpResponse("job has been deleted")
+        messages.error(request, 'Deleted Job')
+        return redirect('job:jobList')
 
 def jobEdit(request, job_id):
     job = Job.objects.get(pk=job_id)

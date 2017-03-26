@@ -1,39 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {{ block.super }}
 <h2>Welcome to the JMatcher Website!</h2>
 
-    <form id="idForm">
-          {% csrf_token %}
-        <input id="input1" name="inputnumber1" />
-        <input type="hidden" value="hiddenvalue1" name="hiddeninput">
-        <button type="submit">Submit</button>
-    </form>
 {%  endblock content %}
 
-{% block javascript %}
-    {{ block.super }}
-    <script>
-
-    $("#idForm").submit(function(e) {
-        console.log("Submitting");
-        var url = "{% url 'users:ajax' %}"; // the script where you handle the form input.
-
-        $.ajax({
-               type: "POST",
-               url: url,
-               data: $("#idForm").serialize(), // serializes the form's elements.
-               success: function(data)
-               {
-                   console.log(data)
-                   alert(data); // show response from the php script.
-               }
-             });
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-    });
-
-
-    </script>
-{% endblock %}
