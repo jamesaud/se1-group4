@@ -33,6 +33,9 @@ class Post(models.Model):
     def __str__(self):
         return self.description
 
+    class Meta:
+        ordering = ['-updated_at']
+
 
 class PostComments(models.Model):
 
