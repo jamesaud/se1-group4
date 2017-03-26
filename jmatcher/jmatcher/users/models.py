@@ -17,8 +17,8 @@ class User(AbstractUser):
     #location = models.OneToOneField(Location)
     connections = models.ManyToManyField("self", null=True)
 
-    image = models.ImageField(blank=True, null=True)
-    background = models.ImageField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, default='url/url.com')
+    background = models.ImageField(blank=True, null=True, default='url/url.com')
     short_description = models.CharField(blank=True, null=True, max_length=90)
 
     def __str__(self):
@@ -29,7 +29,6 @@ class User(AbstractUser):
             return reverse('employers:home', kwargs={'username': self.username})
         else:
             return reverse('students:home', kwargs={'username': self.username})
-
 
 
     def is_employer(self):

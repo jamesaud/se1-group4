@@ -41,6 +41,8 @@
 <br>
       <a class="btn btn-primary" href="{% if request.user.is_employer %}{% url 'job:employerPost' %}{% else %}{% url 'job:jobList' %}{% endif %}">
           Return to Jobs</a>
-
+    <a class="btn btn-primary" href = "{% url 'job:jobDelete' job_show_detail.pk %}" role="button">Delete</a>
+     <a class="btn btn-primary" method="post" href = "{% url 'job:jobEdit' job_show_detail.pk %}" role="button">Edit</a>
+    <a class="btn btn-primary" method="post" href = "{% url 'job:jobApply' job_show_detail.pk %}"role="button">Apply</a>
   </div>
 {% endblock content %}

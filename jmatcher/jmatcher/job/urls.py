@@ -28,6 +28,22 @@ urlpatterns = [
     url(r'^job_detail/(?P<job_id>[\d]+)/$',
             view = views.job_detail,
             name = 'job_detail'),
+
+    url(r'^jobDelete/(?P<job_id>[\d]+)/delete/$',
+            view = views.jobDelete,
+            name = 'jobDelete'),
+
+    url(r'^jobEdit/(?P<job_id>[\d]+)/edit/$',
+            view = views.jobEdit,
+            name = 'jobEdit'),
+
+    url(r'^jobApply/(?P<job_id>[\d]+)/apply/$',
+            view = views.jobApply,
+            name = 'jobApply'),
+
+    url(r'^jobSearch/$',
+        view=views.jobSearch,
+        name='jobSearch'),
 ]
 
 
