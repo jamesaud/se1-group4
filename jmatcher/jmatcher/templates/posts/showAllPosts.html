@@ -14,7 +14,8 @@
 					<li class='list-group-item'>
 						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5>
 						<p>Posted by: 
-							<a href="{% url 'students:home' post.user.username %}">{{post.description}}</a>
+							<a href="{% url 'students:home' post.user.username %}">{{post.user.username}}</a>, 
+						   {{post.get_comment_count}} Comments, {{post.total_likes}} Likes, {{post.total_shares}} Shares
 						</p>
 					</li>
 					<br>
