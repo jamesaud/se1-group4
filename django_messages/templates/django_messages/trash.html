@@ -1,0 +1,31 @@
+{% extends "django_messages/base.html" %}
+{% load i18n %}
+
+{% block inner %}
+
+    {{ block.super }}
+<center><h1>{% trans "Deleted Messages" %}</h1></center><br>
+{% if message_list %}
+<table class="table table-bordered">
+    <thead class ="thead-inverse">
+        <tr><th>{% trans "Sender" %}</th><th>{% trans "Subject" %}</th><th>{% trans "Date" %}</th><th>{% trans "Action" %}</th></tr>
+    </thead>
+    <tbody>
+{% for message in message_list %}
+    <tr>
+        <td>{{ message.sender }}</td>
+        <td>
+        <i>{{ message.subject }}</i>
+        </td>
+        <td>{{ message.sent_at|date:_("DATETIME_FORMAT") }}</td>
+        <td><a href="{% url 'messages_undelete' message.id %}">{% trans "Undelete" %}</a></td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>{% trans "No messages." %}</p>
+{% endif %}
+<br />
+{% endblock %}
+

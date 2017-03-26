@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class = "postDetail">
+  <br>
+    <h2>
+    {{job_show_detail.post_name}}
+    </h2>
+<br>
+    <ul class="list-group">
+        <li class='list-group-item list-group-item-warning'><h4>Posted By: <a href="{% url 'employers:home' job_show_detail.user.username %}">{{ job_show_detail.user.employer.company_name }}</a></h4></li>
+    <li class='list-group-item'>
+      Employment Type:
+    {{job_show_detail.employment_type}}
+    </li>
+    <li class='list-group-item'>
+      Industry:
+    {{job_show_detail.industry}}
+    </li>
+    <li class='list-group-item'>
+      Location:
+    {{job_show_detail.location}}
+    </li>
+    <li class='list-group-item'>
+      Experience:
+    {{job_show_detail.experience}}
+    </li>
+    <li class='list-group-item'>
+      Description:
+    {{job_show_detail.description}}
+    </li>
+
+    <li class='list-group-item'>
+      Skills:
+      {% for skill in job_show_detail.skills.all %}
+        {{skill.skill}}
+        {% empty %}
+        No skills required.
+      {% endfor %}
+    </li>
+    </ul>
+<br>
+
+  {% if request.user == job_show_detail.user %}
+      <a class="btn btn-primary" href="{% if request.user.is_employer %}{% url 'job:employerPost' %}{% else %}{% url 'job:jobList' %}{% endif %}">
+          Return to Jobs</a>
+    <a class="btn btn-primary" href = "{% url 'job:jobDelete' job_show_detail.pk %}" role="button">Delete</a>
+     <a class="btn btn-primary" method="post" href = "{% url 'job:jobEdit' job_show_detail.pk %}" role="button">Edit</a>
+    <a class="btn btn-primary" method="post" href = "{% url 'job:jobApply' job_show_detail.pk %}"role="button">Apply</a>
+  </div>
+    {% endif %}
+{% endblock content %}

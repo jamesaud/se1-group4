@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block javascript %}
+{{ block.super }}
+
+  <script>
+
+    $("#like").click(function(e){
+    	$.ajax({
+    		type: "POST",
+    		url: "{% url 'posts:like_post' %}",
+    		data: {"post_id": '{{post.id}}', 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    		dataType: "json",
+    		success: function(response) {
+    			$("#like").text(response.like_button_text);
+    		},
+    		error: function(rs, e){
+    			console.log(rs.responseText)
+    		}
+    	});
+
+    	e.preventDefault();
+    });
+
+    $("#share").click(function(e){
+		$.ajax({
+    		type: "POST",
+    		url: "{% url 'posts:share_post' %}",
+    		data: {"post_id": '{{post.id}}', 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    		dataType: "json",
+    		success: function(response) {
+    			$("#share").text(response.share_button_text);
+    		},
+    		error: function(rs, e){
+    			console.log(rs.responseText)
+    		}
+    	});
+
+    	e.preventDefault();
+    });
+
+  </script>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h1>Post Page</h1>
+		<h3>Description: {{post.description}}</h3>
+		<button id="like" class="btn btn-default">{{like_action}}</button>
+		<button id="share" class="btn btn-default">{{share_action}}</button>
+		<form class="form-horizontal" method="post" action="{% url 'posts:get_post' post.id %}">
+    	{% csrf_token %}
+		{{comment_form | crispy}}
+		<div class="control-group">
+	      	<div class="controls">
+	        <button type="submit" class="btn">Comment</button>
+	        </div>
+        </div>
+        </form>
+     	<br>
+        <ul class='list-group'>
+        	{% for comment in post.postcomments_set.all %}
+        		<li class='list-group-item'>
+        			<p><a href="{% url 'students:home' comment.commenting_user %}">{{comment.commenting_user}}: </a>{{comment.comment}}</p>
+        		</li>
+        	{% endfor %}
+        </ul>
+		
+		<a href="{% url 'posts:get_all_posts'%}">Return to all posts</a>
+	</div>
+{% endblock content %}

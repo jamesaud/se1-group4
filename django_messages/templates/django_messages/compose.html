@@ -1,0 +1,52 @@
+{% extends "django_messages/base.html" %}
+{% load i18n crispy_forms_tags %}
+
+{% block inner %}
+    {{ block.super }}
+
+<h1><center>&nbsp;&nbsp;&nbsp;{% trans "Compose Message"%}</center></h1>
+    <br>
+<form id='composeform' action="" method="post">
+{% csrf_token %}
+
+{{ form |crispy}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <center> <input type="submit" value="{% trans "Send" %}"/></center> <br>
+</form>
+
+{% endblock %}
+
+
+{% block javascript %}
+    {{ block.super }}
+  <script>
+  $( function(e) {
+    var availableTags = [
+      {% for friend in friends %}
+          "{{friend.get_name}}",
+        {% endfor %}
+    ];
+
+    var map_name_to_username = {}
+      {% for friend in friends %}
+        map_name_to_username["{{friend.get_name}}"] = "{{ friend.username }}";
+      {% endfor %}
+
+
+
+    $('#composeform').submit(function () {
+        var val = $('#id_recipient').val();
+        $('#id_recipient').val(map_name_to_username[val]);
+          return true;
+    });
+
+
+
+    $( "#id_recipient" ).autocomplete({
+      source: availableTags
+    });
+  } );
+
+
+  </script>
+{% endblock javascript %}

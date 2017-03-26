@@ -1,0 +1,23 @@
+{% extends "base_profile.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+		<a href="{% url 'posts:post_status' %}" class='btn btn-primary'>Create New Post</a>
+		<br>
+		<br>
+		{% if posts %}
+			<ul class='list-group'>
+				{% for post in posts %}
+					<li class='list-group-item'>
+						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5><p>Posted by:
+							<a href="{{  post.user.get_absolute_url }}">{{post.user.username}}</a>,
+						   {{post.get_comment_count}} Comments, {{post.total_likes}} Likes, {{post.total_shares}} Shares
+						</p>
+					</li>
+					<br>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>No posts found</p>
+		{% endif %}
+{% endblock content %}
