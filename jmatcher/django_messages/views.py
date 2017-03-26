@@ -72,6 +72,8 @@ def compose(request, recipient=None, form_class=ComposeForm,
         ``success_url``: where to redirect after successfull submission
     """
     if request.method == "POST":
+        print("POST DATA")
+        print(request.POST)
         sender = request.user
         form = form_class(request.POST, recipient_filter=recipient_filter)
         if form.is_valid():
@@ -87,9 +89,12 @@ def compose(request, recipient=None, form_class=ComposeForm,
         if recipient is not None:
             recipients = [u for u in User.objects.filter(**{'%s__in' % get_username_field(): [r.strip() for r in recipient.split('+')]})]
             form.fields['recipient'].initial = recipients
-    return render(request, template_name, {
-        'form': form,
-    })
+    return render(request=request,
+                  template_name=template_name,
+                  context={
+                        'form': form,
+                        'friends': [user for user in request.user.connections.all()],
+                    })
 
 @login_required
 def reply(request, message_id, form_class=ComposeForm,
@@ -125,6 +130,7 @@ def reply(request, message_id, form_class=ComposeForm,
             })
     return render(request, template_name, {
         'form': form,
+        'friends': [user for user in request.user.connections.all()],
     })
 
 @login_required

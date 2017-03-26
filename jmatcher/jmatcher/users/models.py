@@ -37,6 +37,12 @@ class User(AbstractUser):
     def is_student(self):
         return True if hasattr(self, 'student') else False
 
+    def get_name(self):
+        if self.is_employer():
+            return self.employer.company_name
+        else:
+            return self.get_full_name()
+
 
 
 
