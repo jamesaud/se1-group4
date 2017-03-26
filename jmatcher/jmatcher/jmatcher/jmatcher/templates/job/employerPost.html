@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+
+{% block title %}Employer{% endblock %}
+
+{% block css %}
+{{block.super}}
+<link href="{% static 'css/job.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+   <h2>My Job Posts</h2>
+   <form method="get" action="{% url 'job:jobSearch' %}" class="navbar-form pull-right">
+  <input type="text" id="searchBox" class="input-medium search-query" name="q" placeholder="Search">
+  <input type="submit" class="btn" href = "{% url 'job:jobSearch' %}"value="Search" >
+  </form>
+
+{% if jobs %}
+  {% for job in jobs %}
+
+		<ul id="timeline">
+      <a href="#">
+        <li class="listing clearfix">
+          <div class="image_wrapper">
+            <img src="https://lh3.ggpht.com/lSLM0xhCA1RZOwaQcjhlwmsvaIQYaP3c5qbDKCgLALhydrgExnaSKZdGa8S3YtRuVA=w300" alt="Twitter">
+          </div>
+          <div class="info">
+            <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
+            <span class="job_info">{{user.employer.company_name}} <span>&bull;</span> {{job.location}} <span>&bull;</span> {{job.created_at}}</span>
+          </div>
+          <span class="job_type full_time">{{job.employment_type}}</span>
+        </li>
+      </a>
+    </ul>
+  {% endfor %}
+  {% else %}
+  <p> No jobs have been posted. </p>
+  {% endif %}
+</div>
+{% endblock content %}
