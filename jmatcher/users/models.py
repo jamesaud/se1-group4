@@ -45,7 +45,7 @@ class User(AbstractUser):
 
     def get_background_url(self):
         try:
-            return self.image.url
+            return self.background.url
         except ValueError:
             return 'http://www.planwallpaper.com/static/images/10e39f13ddfb80570f3e44fb2016cb76.jpg'
 
