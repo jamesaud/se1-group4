@@ -114,9 +114,7 @@ ANYMAIL = {
     "MAILGUN_API_KEY": env('DJANGO_MAILGUN_API_KEY'),
     "MAILGUN_SENDER_DOMAIN": env('MAILGUN_SENDER_DOMAIN')
 }
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
 
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
