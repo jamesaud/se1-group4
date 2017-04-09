@@ -53,7 +53,7 @@ X_FRAME_OPTIONS = 'DENY'
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
-# Hosts/domain names that are valid for this site
+# Hosts/doaain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['jmatcher.com'])
 # END SITE CONFIGURATION
@@ -116,7 +116,7 @@ ANYMAIL = {
 }
 EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
 
-# TEMPLATE CONFIGURATION
+# TEMPLATE CONFIGURATION 
 # ------------------------------------------------------------------------------
 # See:
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
