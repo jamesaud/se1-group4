@@ -11,4 +11,4 @@ class UserSignupForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'image', 'short_description', 'background']
+        fields = ['first_name', 'last_name', 'short_description', 'image', 'background']

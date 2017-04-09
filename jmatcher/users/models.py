@@ -72,8 +72,6 @@ class Skill(models.Model):
         return self.skill
 
 
-
-
 class PositionChoices:
     INTERN = 'Intern'
     FULL_TIME = 'Full Time'
@@ -83,8 +81,10 @@ class PositionChoices:
         (FULL_TIME, 'Full Time')
     )
 
+
 class Position(models.Model):
     position = models.CharField(max_length=255, primary_key=True)
 
     def __str__(self):
         return self.position
+

@@ -13,12 +13,16 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
 
+
+
     {% block css %}
     <!-- Latest compiled and minified Bootstrap 4 Alpha 4 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
 
     <!-- Your stuff: Third-party CSS libraries go here -->
     <!-- This file stores project-specific CSS -->
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
     <link href="{% static 'css/toolkit.css' %}" rel="stylesheet">
@@ -89,6 +93,14 @@
                           {% endif %}
                     </li>
 
+                    <li class="nav-item">
+                        <a type="" class="nav-link" data-container="body" data-toggle="popover" data-html='true' data-placement="bottom"
+                           title="Notifications"
+                           data-content="New Friend Request<br>
+                            ">
+                          <i class="fa fa-bell"></i>
+                        </a>
+                    </li>
 
 
                     <li class="nav-item">
@@ -144,6 +156,12 @@
 
       <!-- place project specific Javascript in this file -->
       <script src="{% static 'js/project.js' %}"></script>
+
+    <script>
+          $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    </script>
 
     {% endblock javascript %}
 

@@ -8,6 +8,9 @@
 {% block inner %}
 <h1>{% trans "Student Sign Up" %}</h1>
 
+        {% include "socialaccount/snippets/provider_list.html" %}
+
+
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'students:signup' %}">

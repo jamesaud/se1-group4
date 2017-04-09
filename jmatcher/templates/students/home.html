@@ -29,9 +29,85 @@
         <p>
 
         </li>
-
     </ul>
     {% endif %}
     <br>
 
+
+   {% if object.workexperience_set.all %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h2>Work Experience</h2>
+            </li>
+
+            {% for work in object.workexperience_set.all %}
+                <li class="list-group-item" style="border-top: 3px double darkgrey;">
+                    <strong>Title: </strong>{{ work.title }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Position:</strong> {{ work.position }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date Started:</strong> {{ work.start_date }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date Ended:</strong> {{ work.end_date }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Description:</strong> {{ work.description }}
+                </li>
+            {% endfor %}
+    </ul>
+<br>
+    {% endif %}
+
+   {% if object.education_set.all %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h2>Education</h2>
+            </li>
+
+            {% for ed in object.education_set.all %}
+                <li class="list-group-item" style="border-top: 3px double darkgrey;">
+                    <strong>Institution: </strong>{{ ed.institution_name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Level:</strong> {{ ed.level }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date Started:</strong> {{ ed.start_date }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date Ended:</strong> {{ ed.end_date }}
+                </li>
+            {% endfor %}
+    </ul>
+<br>
+    {% endif %}
+
+    {% if object.project_set.all %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h2>Projects</h2>
+            </li>
+
+            {% for pro in object.project_set.all %}
+                <li class="list-group-item" style="border-top: 3px double darkgrey;">
+                    <strong>Title: </strong>{{ pro.title }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date Started:</strong> {{ pro.start_date }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date Ended:</strong> {{ pro.end_date }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Description:</strong> {{ pro.description }}
+                </li>
+            {% endfor %}
+    </ul>
+<br>
+    {% endif %}
+
+    <br>
 {% endblock content %}

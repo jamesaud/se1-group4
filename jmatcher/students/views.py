@@ -10,6 +10,7 @@ from jmatcher.users.models import Skill, User
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView, TemplateView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 
 def index(request):
@@ -31,11 +32,9 @@ class SignUp(SignupView):
         student.save()
         return response
 
-
-
-
 def students(request):
     return render(request, 'students/student_list.html', context={'student_list':Student.objects.exclude(skills__isnull=True)})
+
 
 def home(request, username):
     student = User.objects.get(username=username).student
@@ -43,10 +42,22 @@ def home(request, username):
 
 
 def update(request):
+    from .forms import WorkInlineForm, EducationInlineForm, ProjectInlineForm
+    import datetime
+    from .models import WorkExperience
+
+
+    work = WorkInlineForm(request.POST or None, instance=request.user.student)
+    education = EducationInlineForm(request.POST or None, instance=request.user.student)
+    project = ProjectInlineForm(request.POST or None, instance=request.user.student)
+
+
     form = StudentForm(request.POST or None, instance = request.user.student)
 
     user_form = UserForm(request.POST or None, request.FILES or None, instance=request.user)
-    if (request.method == 'POST') and form.is_valid() and user_form.is_valid():
+
+
+    if (request.method == 'POST') and form.is_valid() and user_form.is_valid() and work.is_valid() and education.is_valid() and project.is_valid():
         skills = form.cleaned_data['skills']
 
         for key, value in form.cleaned_data.items():
@@ -54,6 +65,10 @@ def update(request):
 
         for key, value in user_form.cleaned_data.items():
             setattr(request.user, key, value)
+
+        work.save()
+        education.save()
+        project.save()
 
         request.user.image = user_form.cleaned_data['image']
 
@@ -63,8 +78,13 @@ def update(request):
         request.user.student.save()
         request.user.save()
 
+        messages.add_message(request, messages.INFO, 'Successfully Updated Profile Information.')
+
         return redirect('students:home', username=request.user.username)
 
     return render(request, 'students/student_form.html', context={'form': form,
-                                                                  'user_form': user_form})
+                                                                  'user_form': user_form,
+                                                                  'work': work,
+                                                                  'project': project,
+                                                                  'education': education})
 
