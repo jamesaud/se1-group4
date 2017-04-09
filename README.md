@@ -7,3 +7,5 @@ https://github.com/furious-luke/django-address
 
 
 JQUERY: https://gist.github.com/jamesaud/2310e95c64bbc6660d8208e7718960ed
+
+https://simpleisbetterthancomplex.com/tutorial/2016/08/03/how-to-paginate-with-django.html/users?page=5
