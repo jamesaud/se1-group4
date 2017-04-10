@@ -33,6 +33,8 @@ def searchUser(request):
 def search(request):
     location, employment_type = request.GET.get('location'), request.GET.get('employment_type')
     dict = {'location': location, 'employment_type': employment_type}
+    entry_query_job = None
+    query_string = None
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         entry_query_job = get_query(query_string, ['post_name', 'description', ])
@@ -41,7 +43,10 @@ def search(request):
         if value is None:
             del dict[key]
 
-    found_job_entries = Job.objects.filter(entry_query_job, **dict)
+    if entry_query_job:
+        found_job_entries = Job.objects.filter(entry_query_job, **dict)
+    else:
+        found_job_entries = Job.objects.filter(**dict)
     found_job_entries = jobPaginate(request, found_job_entries.all(), 3)
     context = {}
     context['dict'] = dict
