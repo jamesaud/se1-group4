@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+
+{% block title %}Employer{% endblock %}
+
+{% block css %}
+{{block.super}}
+<link href="{% static 'css/job.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+
+<h2> search result </h2>
+{% if found_student_entries %}
+      <p> You searched for "{{ query_user }}". </p>
+<p> Search result for users </p>
+      <ul class="list-group">
+                {% for user in found_student_entries %}
+            		<ul id="timeline">
+                          <a href="#">
+                            <li class="listing clearfix">
+                              <div class="image_wrapper">
+                                <img src="{{ user.get_image_url }}" style="height: 58px; width: auto;" alt="">
+                              </div>
+                              <div class="info">
+                                <span class="job_title"><a href = "{% url 'students:home' user.username %}"> {{user.get_full_name}}</a></span>
+                                   <span class="job_info">{{user.student.skill}} <span>&bull;
+                                   </span> {{user.student.position}} <span>&bull;
+                              </div>
+                            </li>
+                          </a>
+                     </ul>
+                {% endfor %}
+    {% else %}
+      <p> No results of users found. </p>
+        {% endif %}
+
+{% endblock content %}

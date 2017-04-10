@@ -13,7 +13,7 @@
   <input type="submit" class="btn" href = "{% url 'job:jobSearch' %}"value="Search" >
   </form>
 
-    <br>
+
   {% if jobs %}
       <ul class="list-group">
         {% for job in jobs %}
@@ -27,7 +27,11 @@
                                 <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
                                 <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location}} <span>&bull;</span> {{job.created_at}}</span>
                               </div>
-                              <span class="job_type full_time">{{job.employment_type}}</span>
+                                {% if job.employment_type == "FULL_TIME" %}
+                                      <span class="job_type full_time">{{job.employment_type}}</span>
+                                      {% else %}
+                                      <span class="job_type part_time">{{job.employment_type}}</span>
+                                {% endif %}
                             </li>
                           </a>
                      </ul>
@@ -36,7 +40,5 @@
       <p> No jobs have been posted. </p>
 
   {% endif %}
-
-
 
 {% endblock content %}

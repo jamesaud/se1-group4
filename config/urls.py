@@ -27,7 +27,8 @@ urlpatterns = [
 
     url(r'^messages/', include('django_messages.urls')),
     # Your stuff: custom urls includes go here
-    url(r'^posts/', include('jmatcher.posts.urls', namespace='posts'))
+    url(r'^posts/', include('jmatcher.posts.urls', namespace='posts')),
+    url(r'^search/', include('jmatcher.search.urls', namespace='search'))
     ]
 
 if settings.DEBUG:

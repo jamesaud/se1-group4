@@ -37,13 +37,9 @@ urlpatterns = [
             view = views.jobEdit,
             name = 'jobEdit'),
 
-    url(r'^jobApply/(?P<job_id>[\d]+)/apply/$',
-            view = views.jobApply,
-            name = 'jobApply'),
 
-    url(r'^jobSearch/$',
-        view=views.jobSearch,
-        name='jobSearch'),
+
+
 ]
 
 

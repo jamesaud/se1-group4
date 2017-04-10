@@ -1,15 +1,15 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, render_to_response
 
 # Create your views here.
 
 from django.http import HttpResponse
 from django.contrib import messages
-from .utils import get_query
 from .jobForm import jobForm
 from django.template import RequestContext
 from jmatcher.employers.models import Employer
 from django.contrib import messages
-
+from jmatcher.users.models import User
 
 from .models import Job
 
@@ -18,7 +18,8 @@ def jobTest(request):
 
 
 def listJob(request):
-    jobs = Job.objects.all()
+    jobs  = Job.objects.all()
+
     return render(request, 'job/jobList.html', context={'jobs':jobs})
 
 def postJob(request):
@@ -59,12 +60,26 @@ def postJob(request):
                 context['employer'] = form
                 return render(request, template_name='job/postJob.html', context=context)
 
+def jobPaginate(request, list, num):
+    paginator = Paginator(list, num)
+    page = request.GET.get('page', 1)
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+    return list
+
 def employerPost(request):
     user = request.user  # User Object
     # company_name = Employer.objects.get(pk = user.pk)
     context = {}
-    jobs = user.job_set.all()
+    jobs_list = user.job_set.all()
+    jobs = jobPaginate(request, jobs_list, 3)
     context['jobs'] = jobs
+
     return render(request, template_name = 'job/employerPost.html', context = {'jobs':jobs, 'user': user})
 
 def postSuccess(request):
@@ -85,7 +100,7 @@ def jobDelete(request, job_id):
         messages.error(request, 'Deleted Job')
         return redirect('job:jobList')
 
-def jobEdit(request, job_id):
+def jobEdit(request, job_id, dict):
     job = Job.objects.get(pk=job_id)
     form = jobForm(request.POST or None, instance = job)
     if (request.method == 'POST') and form.is_valid():
@@ -94,23 +109,6 @@ def jobEdit(request, job_id):
         job.save()
         return redirect('job:job_detail', job_id=job_id)
     return render(request, template_name = 'job/postJob.html', context = {'employer': form})
-
-def jobApply(request, job_id):
-    return HttpResponse("You have successfully appllied the job");
-
-def jobSearch(request):
-    query_string = ''
-    found_entries = None
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        entry_query = get_query(query_string, ['post_name', 'description', ])
-
-        found_entries = Job.objects.filter(entry_query)
-        context = {}
-        context['query_string'] = query_string
-        context['found_entries'] = found_entries
-    return render(request, template_name = 'job/search_results.html', context = context)
-
 
 
 
