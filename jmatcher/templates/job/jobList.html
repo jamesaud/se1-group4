@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+{{block.super}}
+<link href="{% static 'css/job.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+  <script>
+    function job_apply(event, job_id){
+      $.ajax({
+        type: "POST",
+        url: "{% url 'job:jobApply'%}",
+        data: {"job_id": job_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        dataType: "json",
+        success: function(response) {
+          document.getElementById(job_id).innerHTML = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied'
+        },
+        error: function(rs,e){
+          console.log(rs.responseText)
+        }
+      });
+    }
+    
+  </script>
+{% endblock %}
+
+{% block content %}
+<h2>All Job Matches For You</h2>
+      <form method="get" action="{% url 'job:jobSearch' %}" class="navbar-form pull-right">
+  <input type="text" id="searchBox" class="input-medium search-query" name="q" placeholder="Search">
+  <input type="submit" class="btn" href = "{% url 'job:jobSearch' %}"value="Search" >
+  </form>
+
+    <br>
+  {% if jobs %}
+      <ul class="list-group">
+        {% for job in jobs %}
+            		<ul id="timeline">
+                          <a href="#">
+                            <li class="listing clearfix">
+                              <div class="image_wrapper">
+                                <img src="{{ job.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
+                              </div>
+                              <div class="info">
+                                <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
+                                <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location}} <span>&bull;</span> {{job.created_at}}</span>
+                              </div>
+                              <span class="job_type full_time">{{job.employment_type}}</span>
+                              <span class="job_type full_time">{{job.match_percent|floatformat}}% Match</span>
+                              {% if job.applied %}
+                                  <span class="apply_span" id="{{job.id}}">
+                                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied
+                                  </span>
+                              {% else %}
+                              <span class="apply_span" id="{{job.id}}">
+                        <button id="apply" class="btn btn-default" onclick="job_apply(event,{{job.id}})"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Apply</button>
+                              </span>
+                              {% endif %}
+                            </li>
+                          </a>
+                     </ul>
+        {% endfor %}
+    {% else %}
+      <p> No jobs have been posted. </p>
+
+  {% endif %}
+
+
+
+{% endblock content %}

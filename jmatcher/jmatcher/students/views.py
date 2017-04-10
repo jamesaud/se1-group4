@@ -37,7 +37,7 @@ def update(request):
 
     user_form = UserForm(request.POST or None, instance=request.user)
     if (request.method == 'POST') and form.is_valid() and user_form.is_valid():
-        skills = form.cleaned_data['skills']
+        skills = form.cleaned_data['skill']
 
         for key, value in form.cleaned_data.items():
             setattr(request.user.student, key, value)
@@ -45,8 +45,17 @@ def update(request):
         for key, value in user_form.cleaned_data.items():
             setattr(request.user, key, value)
 
-        for skill in skills:
-            request.user.student.skills.add(skill)
+        request.user.image = user_form.cleaned_data['image']
+
+        for skill in form.cleaned_data['skill'].split(","):
+            skill = skill.strip().lower()
+            try:
+                skill_object = Skill.objects.get(skill=skill)
+            except Skill.DoesNotExist as e:
+                skill_object = Skill(skill=skill)
+                skill_object.save()
+            else:
+                request.user.student.skills.add(skill_object)
 
         request.user.student.save()
         request.user.save()

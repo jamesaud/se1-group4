@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block css %}
+{{block.super}}
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
 {% block javascript %}
 {{ block.super }}
 
