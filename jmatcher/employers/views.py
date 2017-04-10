@@ -20,8 +20,14 @@ class SignUp(SignupView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        print("im emplyoer")
         employer = Employer(user=self.user)
+        print("HE")
         employer.save()
+        print("NOW ERE")
+        print("I AM AN EMPLOYER")
+        print(employer.__dict__)
+        print(employer.user)
         return response
 
 
