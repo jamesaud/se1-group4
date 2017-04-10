@@ -62,7 +62,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['jmatcher.com'])
 INSTALLED_APPS += ('gunicorn', )
 
 
-RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
+RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',)
 MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 
 
