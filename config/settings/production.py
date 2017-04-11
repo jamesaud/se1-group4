@@ -13,6 +13,8 @@ from __future__ import absolute_import, unicode_literals
 from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
 import logging
+import os
+import raven
 
 
 from .common import *  # noqa
@@ -61,6 +63,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['jmatcher.com'])
 
 INSTALLED_APPS += ('gunicorn', )
 
+RAVEN_APP = ('raven.contrib.django.raven_compat',)
 
 RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',)
 MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
@@ -216,7 +219,9 @@ LOGGING = {
 SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
 RAVEN_CONFIG = {
     'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
-    'DSN': SENTRY_DSN
+    'DSN': SENTRY_DSN,
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+
 }
 
 # Custom Admin URL, use {% url 'admin:index' %}
