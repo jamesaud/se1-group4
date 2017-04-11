@@ -243,6 +243,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 ACCOUNT_ADAPTER = 'jmatcher.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'jmatcher.users.adapters.SocialAccountAdapter'
+SOCIALACCOUNT_EMAIL_REQUIRED=False
 
 # Custom user app defaults
 # Select the correct user model
