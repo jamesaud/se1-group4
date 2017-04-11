@@ -62,8 +62,8 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['jmatcher.com'])
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ('gunicorn', )
+INSTALLED_APPS += ('raven.contrib.django.raven_compat', )
 
-RAVEN_APP = ('raven.contrib.django.raven_compat',)
 
 RAVEN_MIDDLEWARE = ('raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',)
 MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
@@ -220,8 +220,6 @@ SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
 RAVEN_CONFIG = {
     'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
     'DSN': SENTRY_DSN,
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-
 }
 
 # Custom Admin URL, use {% url 'admin:index' %}
