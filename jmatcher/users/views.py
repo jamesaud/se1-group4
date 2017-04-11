@@ -9,6 +9,7 @@ from django.shortcuts import HttpResponse, redirect
 from django.contrib import messages
 
 from .models import User
+from jmatcher.students.models import Student
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -21,7 +22,6 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
-    from jmatcher.students.models import Student
     permanent = False
 
     def get_redirect_url(self):
@@ -33,7 +33,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
                            kwargs={'username': self.request.user.username})
 
         else:
-            student = Student(user=self.user)
+            student = Student(User=self.user)
             student.save()
             return reverse('students:home',
                            kwargs={'username': self.request.user.username})
