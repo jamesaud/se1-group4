@@ -26,8 +26,8 @@ def account_signup(request):
 
 class SignUp(SignupView):
 
-    def form_valid(self, form):
-        response = super(SignUp, self).form_valid(form)
+    def get_success_url(self):
+        response = super().get_success_url()
         student = Student(user=self.user)
         student.save()
         return response

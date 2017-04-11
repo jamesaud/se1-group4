@@ -21,16 +21,22 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
+    from jmatcher.students.models import Student
     permanent = False
 
     def get_redirect_url(self):
         if self.request.user.is_employer():
             return reverse('employers:home',
                            kwargs={'username': self.request.user.username})
-        else:
+        elif self.request.user.is_student():
             return reverse('students:home',
                            kwargs={'username': self.request.user.username})
 
+        else:
+            student = Student(user=self.user)
+            student.save()
+            return reverse('students:home',
+                           kwargs={'username': self.request.user.username})
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
