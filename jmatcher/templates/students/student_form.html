@@ -31,6 +31,11 @@
             })
       });
   </script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script>
+    $('input.date').datepicker({
+    });
+    </script>
 
 {% endblock %}
 
@@ -110,11 +115,4 @@
 {% endblock content %}
 
 
-{% block javascript %}
-    {{ block.super }}
-              <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-    <script>
-    $('input.date').datepicker({
-    });
-    </script>
 {% endblock %}
