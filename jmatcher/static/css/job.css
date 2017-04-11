@@ -87,7 +87,7 @@ text-decoration: none;
   box-shadow: 0px 2px 40px 0 rgba(0,0,0,0.1);
 
 }
-#timeline .listing img,.info,.job_type{
+#timeline .listing img,.info,.job_type,.apply_span{
   display: table-cell;
   vertical-align: middle;
   font-size: 0.9em;
@@ -122,6 +122,15 @@ text-decoration: none;
   margin: 0 .75em;
 }
 .job_type{
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75em;
+  position: relative;
+  white-space: nowrap;
+  padding-top: .6em;
+  width: 100px;
+}
+.apply_span{
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.75em;

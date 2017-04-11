@@ -33,8 +33,18 @@ def post_status(request):
 
 def get_all_posts(request):
     user = request.user
+    connections = user.connections.all()
+    posts = set()
+
+    for connection in connections:
+        for post in connection.likes.all():
+            posts.add(post)
+        for post in connection.shares.all():
+            posts.add(post)
+        for post in connection.post_set.all():
+            posts.add(post)
+
     context = {}
-    posts = Post.objects.all()
     context['posts'] = posts
     return render(request, "posts/showAllPosts.html", context)
 

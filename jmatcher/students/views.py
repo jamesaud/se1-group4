@@ -72,8 +72,16 @@ def update(request):
 
         request.user.image = user_form.cleaned_data['image']
 
-        for skill in skills:
-            request.user.student.skills.add(skill)
+        for skill in form.cleaned_data['skill'].split(","):
+            skill = skill.strip().lower()
+            try:
+                skill_object = Skill.objects.get(skill=skill)
+            except Skill.DoesNotExist as e:
+                skill_object = Skill(skill=skill)
+                skill_object.save()
+            else:
+                request.user.student.skills.add(skill_object)
+
 
         request.user.student.save()
         request.user.save()

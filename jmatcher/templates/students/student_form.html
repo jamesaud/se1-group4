@@ -4,7 +4,37 @@
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+      <link href="{% static 'css/tagit.css' %}" rel="stylesheet">
+
 {% endblock %}
+
+
+{% block javascript %}
+{{ block.super }}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{% static 'js/tagit.js' %}"></script>
+  <script>
+      $(function(){
+        $("#id_skill").tagit({
+            tagSource: function(search, showChoices) {
+              var that = this;
+              $.ajax({
+                url: "{% url 'job:getSkills'%}",
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function(choices) {
+                  showChoices(that._subtractArray(choices.skills, that.assignedTags()));
+                }
+              });
+            }
+            })
+      });
+  </script>
+
+{% endblock %}
+
+
+
 {% block content %}
 <h2>Updating {{ request.user.get_full_name }}</h2>
     <br><br>

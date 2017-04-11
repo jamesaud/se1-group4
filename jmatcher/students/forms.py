@@ -5,10 +5,15 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 from django.conf import settings
 
+from django import forms
+from .models import Student
+from django.utils.translation import ugettext_lazy as _
+
 class StudentForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        fields = ['skills', 'position']
+	skill = forms.CharField()
+	class Meta:
+		model = Student
+		fields = ['position']
 
 
 class WorkForm(forms.ModelForm):

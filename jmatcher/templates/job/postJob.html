@@ -1,5 +1,52 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+
+{% block css %}
+{{block.super}}
+	<link href="{% static 'css/tagit.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8En54rylKJs2hKQ5ar8FJjNAxHwo8QVo&callback=initMap"
+  type="text/javascript"></script>
+  <script src="{% static 'js/tagit.js' %}"></script>
+  <script>
+
+	$(function(){
+
+	    $("#id_skill").tagit({
+	        tagSource: function(search, showChoices) {
+			      var that = this;
+			      $.ajax({
+			        url: "{% url 'job:getSkills'%}",
+			        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+			        success: function(choices) {
+			          showChoices(that._subtractArray(choices.skills, that.assignedTags()));
+			        }
+			      });
+			    }
+	        })
+	});
+
+  function init() {
+	 	var options = {
+		  types: ['(cities)'],
+		  componentRestrictions: {country: "us"}
+		 };
+	    var input = document.getElementById('id_location');
+	    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    }
+
+    google.maps.event.addDomListener(window, 'load', init);
+
+
+
+  </script>
+{% endblock %}
 
 {% block content %}
 <form action= "{% url 'job:postJob' %}" method="POST"> {% csrf_token %}
@@ -7,10 +54,7 @@
   <div class = "jobPost">
     {{employer | crispy}}
   </div>
-  <input class="btn btn-primary" type = "submit" value = "submit">
+  <input type = "submit" value = "submit">
 </form>
-    <br><br>
 {% endblock content %}
-
-
 

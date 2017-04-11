@@ -1,12 +1,17 @@
 from time import timezone
-
-
 from django.db import models
 from django import forms
-
-# Create your models here.
 from jmatcher.users.models import User, Skill
+from jmatcher.students.models import Student
 
+'''
+TODO:
+    New Models for IndustryType, Location and Employement
+'''
+class Location(models.Model):
+    city = models.CharField(max_length=200)
+    state = models.CharField(max_length=200)
+    country = models.CharField(max_length=200)
 
 class Job(models.Model):
 
@@ -15,32 +20,39 @@ class Job(models.Model):
         ('Busi', "Business"),
         ('Medi', "Medicine"),
     )
-
+    '''
     LOCATION = (
         ('CA', 'California'),
         ('WA', 'Washington'),
     )
-
+    '''
     EMPLOYMENT_TYPE = (
         ('INTERN', 'Intern'),
         ('FULL_TIME', "Full Time"),
     )
 
     post_name = models.CharField(max_length=200, null=True)
-    employment_type = models.CharField(max_length = 200, null = True, choices = EMPLOYMENT_TYPE)
+    employment_type = models.CharField(max_length = 200, null = True, choices = EMPLOYMENT_TYPE);
     industry =  models.CharField(max_length = 200, null = True, choices = INDUSTRY_TYPE)
-    location = models.CharField(max_length=200, null= True, choices=LOCATION)
+    location = models.ForeignKey(Location, related_name='location', null=True)
     experience = models.CharField(max_length = 200, null=True)
     description = models.TextField(null=True)
     user = models.ForeignKey(User)
-    skills = models.ManyToManyField(Skill, null=True)
+    skills = models.ManyToManyField(Skill, null=True, related_name="reqskills")
+    applications = models.ManyToManyField(Student, through='JobApplication',related_name="applications")
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
     def _str_(self):
         return self.employer
 
+    def total_applications(self):
+        return self.applications.count()
 
-class JobApply(models.Model):
-    job_id = models.ForeignKey(Job)
-    user_id = models.ForeignKey(User)
+class JobApplication(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)

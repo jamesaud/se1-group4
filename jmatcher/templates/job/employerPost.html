@@ -7,6 +7,8 @@
 {% block title %}Employer{% endblock %}
 
 {% block css %}
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 {{block.super}}
 <link href="{% static 'css/job.css' %}" rel="stylesheet">
 {% endblock %}
@@ -25,19 +27,21 @@
           </div>
           <div class="info">
             <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
-            <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location}} <span>&bull;</span> {{job.created_at}}</span>
+            <span class="job_info">{{user.employer.company_name}} <span>&bull;</span> {{job.location}} <span>&bull;</span> {{job.created_at}}</span>
           </div>
-          {% if job.employment_type == "FULL_TIME" %}
           <span class="job_type full_time">{{job.employment_type}}</span>
-          {% else %}
-          <span class="job_type part_time">{{job.employment_type}}</span>
-          {% endif %}
+          <span class="apply_span" id="{{job.id}}">
+
+
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{job.total_applications}} Applications
+
+          </span>
         </li>
       </a>
     </ul>
   {% endfor %}
   {% else %}
-  <p> No jobs have been posted. </p>
+  <p> No jobs have been posted.</p>
   {% endif %}
 </div>
 
