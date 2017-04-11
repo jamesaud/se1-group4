@@ -33,7 +33,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
                            kwargs={'username': self.request.user.username})
 
         else:
-            student = Student(User=self.user)
+            student = Student(User=self.request.user)
             student.save()
             return reverse('students:home',
                            kwargs={'username': self.request.user.username})
