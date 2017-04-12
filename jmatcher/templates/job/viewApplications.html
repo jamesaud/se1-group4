@@ -47,7 +47,8 @@
                               </div>
                               <div class="info">
                               <!--Replace it with user profile URL and user name-->
-                                <span class="job_title"><a href = "{applicant.user.get_absolute_url}"> {{applicant.user.name}}</a></span>
+                                <span class="job_title"><a href = "{{applicant.user.get_absolute_url}}"> {{applicant.user.get_name}}</a></span>
+                                <span class="job_info"> Looking for {{applicant.position}}</span>
                               </div>
                               <span class="job_type full_time">{{applicant.match_percent|floatformat}}% Match</span>
                             </li>
