@@ -44,6 +44,9 @@ def get_all_posts(request):
         for post in connection.post_set.all():
             posts.add(post)
 
+    for post in user.posts.all():
+        posts.add(post)
+
     context = {}
     context['posts'] = posts
     return render(request, "posts/showAllPosts.html", context)
