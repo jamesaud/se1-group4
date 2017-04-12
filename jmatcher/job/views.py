@@ -68,9 +68,8 @@ def postJob(request):
             except Location.DoesNotExist as e:
                 location_object = Location(city=city, state=state, country=country)
                 location_object.save()
-            finally:
-                newJob.location = location_object
 
+            newJob.location = location_object
             newJob.save()
 
             for skill in form.cleaned_data['skill'].split(","):
@@ -80,8 +79,8 @@ def postJob(request):
                 except Skill.DoesNotExist as e:
                     skill_object = Skill(skill=skill)
                     skill_object.save()
-                else:
-                    newJob.skills.add(skill_object)
+                newJob.skills.add(skill_object)
+
             newJob.save()
 
             messages.add_message(request, messages.SUCCESS, 'Successfully Added Job.')
