@@ -66,7 +66,7 @@ SKILL_CHOICES = (
 )
 
 class Skill(models.Model):
-    skill = models.CharField(max_length=255, choices=SKILL_CHOICES)
+    skill = models.CharField(max_length=255)
 
     def __str__(self):
         return self.skill
