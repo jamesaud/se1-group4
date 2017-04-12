@@ -45,10 +45,6 @@ urlpatterns = [
         view=views.jobApply,
         name='jobApply'),
 
-    url(r'^jobSearch/$',
-        view=views.jobSearch,
-        name='jobSearch'),
-
     url(r'^getSkills/$',
         view=views.getSkills,
         name='getSkills'),
