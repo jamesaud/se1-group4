@@ -58,7 +58,7 @@ def update(request):
 
 
     if (request.method == 'POST') and form.is_valid() and user_form.is_valid() and work.is_valid() and education.is_valid() and project.is_valid():
-        skills = form.cleaned_data['skills']
+        skills = form.cleaned_data['skill']
 
         for key, value in form.cleaned_data.items():
             setattr(request.user.student, key, value)
@@ -79,8 +79,8 @@ def update(request):
             except Skill.DoesNotExist as e:
                 skill_object = Skill(skill=skill)
                 skill_object.save()
-            else:
-                request.user.student.skills.add(skill_object)
+
+            request.user.student.skills.add(skill_object)
 
 
         request.user.student.save()
