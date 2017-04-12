@@ -23,7 +23,10 @@
       <a href="#">
         <li class="listing clearfix">
           <div class="image_wrapper">
+          <a href="{{job.user.get_absolute_url}}">
             <img src="{{ job.user.get_image_url }}" style="height: 58px; width: auto;" alt="Twitter">
+          </a>
+            
           </div>
           <div class="info">
             <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
@@ -31,10 +34,9 @@
           </div>
           <span class="job_type full_time">{{job.employment_type}}</span>
           <span class="apply_span" id="{{job.id}}">
-
-
-            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{job.total_applications}} Applications
-
+            <a href="{% url 'job:viewApplications' job.id %}">
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{job.total_applications}} Applications
+            </a>
           </span>
         </li>
       </a>

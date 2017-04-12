@@ -34,35 +34,28 @@
 <h2>All Job Applicants</h2>
 
 
-  {% if jobs %}
+  {% if applicants %}
       <ul class="list-group">
         {% for applicant in applicants %}
             		<ul id="timeline">
                           <a href="#">
                             <li class="listing clearfix">
                               <div class="image_wrapper">
-                                <img src="{{ job.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
+                              <a href="{{applicant.user.get_absolute_url}}">
+                                <img src="{{ applicant.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
+                              </a>
                               </div>
                               <div class="info">
                               <!--Replace it with user profile URL and user name-->
-                                <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
+                                <span class="job_title"><a href = "{applicant.user.get_absolute_url}"> {{applicant.user.name}}</a></span>
                               </div>
-                              <span class="job_type full_time">{{job.match_percent|floatformat}}% Match</span>
-                              {% if job.applied %}
-                                  <span class="apply_span" id="{{job.id}}">
-                                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied
-                                  </span>
-                              {% else %}
-                              <span class="apply_span" id="{{job.id}}">
-                        <button id="apply" class="btn btn-default" onclick="job_apply(event,{{job.id}})"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Apply</button>
-                              </span>
-                              {% endif %}
+                              <span class="job_type full_time">{{applicant.match_percent|floatformat}}% Match</span>
                             </li>
                           </a>
                      </ul>
         {% endfor %}
     {% else %}
-      <p> No jobs have been posted. </p>
+      <p> No one has applied for this job</p>
 
   {% endif %}
 
