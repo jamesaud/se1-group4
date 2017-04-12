@@ -11,7 +11,7 @@
 {% block javascript %}
 {{ block.super }}
   <script>
-    function job_apply(event, job_id){
+    function viewUser(event, job_id){
       $.ajax({
         type: "POST",
         url: "{% url 'job:jobApply'%}",
@@ -25,51 +25,28 @@
         }
       });
     }
-
   </script>
 {% endblock %}
 
 
 {% block content %}
-    <form method="get" action="{% url 'search:search' %}" class="navbar-form pull-right">
-  <input type="text" id="searchBox" class="input-medium search-query" name="q" placeholder="Search">
-  <input type="submit" class="btn" value="Search" >
 
-    <div>
-  <label>Location</label>
-<label class="checkbox-inline"><input type="checkbox" value="CA" name="location">CA </label>
-<label class="checkbox-inline"><input type="checkbox" value="WA" name="location">WA </label>
-<label class="checkbox-inline"><input type="checkbox" value="Others" name="location">Others</label>
-    </div>
-
-       <div>
-       <label>employment_type</label>
-<label class="checkbox-inline"><input type="checkbox" value="FULL_TIME" name="employment_type">FULL_TIME </label>
-<label class="checkbox-inline"><input type="checkbox" value="INTERN" name="employment_type">INTERN </label>
-
-       </div>
-   </form>
-
-    <br>
-    <br>
-    <br>
-<h2>All Job Matches For You</h2>
+<h2>All Job Applicants</h2>
 
 
   {% if jobs %}
       <ul class="list-group">
-        {% for job in jobs %}
+        {% for applicant in applicants %}
             		<ul id="timeline">
                           <a href="#">
                             <li class="listing clearfix">
                               <div class="image_wrapper">
-                              <a href="{{job.user.get_absolute_url}}"><img src="{{ job.user.get_image_url }}" style="height: 58px; width: auto;" alt=""></a>
+                                <img src="{{ job.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
                               </div>
                               <div class="info">
+                              <!--Replace it with user profile URL and user name-->
                                 <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
-                                <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location.city}}<span>&bull;</span> {{job.location.state}} <span>&bull;</span> {{job.created_at|date:'D-F-o'}}</span>
                               </div>
-                              <span class="job_type full_time">{{job.employment_type}}</span>
                               <span class="job_type full_time">{{job.match_percent|floatformat}}% Match</span>
                               {% if job.applied %}
                                   <span class="apply_span" id="{{job.id}}">
