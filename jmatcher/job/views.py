@@ -9,7 +9,7 @@ from django.contrib import messages
 from .jobForm import jobForm
 
 from .models import Job, JobApplication, Skill, Location
-
+from jmatcher.users.models import Position
 
 def jobTest(request):
     return render(request, template_name='job/jobTest.html')
@@ -27,7 +27,8 @@ def listJob(request):
             job.applied = True
         else:
             job.applied = False
-    return render(request, 'job/jobList.html', context={'jobs': all_jobs})
+
+    return render(request, 'job/jobList.html', context={'jobs': all_jobs, 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
 
 def get_job_match_percent(user, job):
     total_req_skills = job.skills.all().count()
@@ -154,22 +155,6 @@ def jobEdit(request, job_id):
         job.save()
         return redirect('job:job_detail', job_id=job_id)
     return render(request, template_name='job/postJob.html', context={'employer': form})
-
-
-def jobSearch(request):
-    from jmatcher.search.utils import get_query
-    query_string = ''
-    found_entries = None
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        entry_query = get_query(query_string, ['post_name', 'description', ])
-
-        found_entries = Job.objects.filter(entry_query)
-        context = {}
-        context['query_string'] = query_string
-        context['found_entries'] = found_entries
-    return render(request, template_name='job/search_results.html', context=context)
-
 
 def jobApply(request):
     job_id = request.POST.get("job_id")
