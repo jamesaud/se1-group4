@@ -44,7 +44,7 @@ def get_all_posts(request):
         for post in connection.post_set.all():
             posts.add(post)
 
-    for post in user.posts.all():
+    for post in user.post_set.all():
         posts.add(post)
 
     context = {}
