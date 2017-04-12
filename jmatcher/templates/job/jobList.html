@@ -67,7 +67,7 @@
                               </div>
                               <div class="info">
                                 <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
-                                <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location.city}}<span>&bull;</span> {{job.location.state}} <span>&bull;</span> {{job.created_at|date:'D-F-o'}}</span>
+                                <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location.city}},{{job.location.state}} <span>&bull;</span> {{job.created_at|date:'D-F-o'}}</span>
                               </div>
                               <span class="job_type full_time">{{job.employment_type}}</span>
                               <span class="job_type full_time">{{job.match_percent|floatformat}}% Match</span>
