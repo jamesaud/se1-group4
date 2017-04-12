@@ -9,9 +9,6 @@ class Student(models.Model):
     skills = models.ManyToManyField(Skill, related_name="skills")
     position = models.OneToOneField(Position, null=True, on_delete=models.SET_NULL)
 
-
-
-
 class PositionChoices:
     INTERN = 'Intern'
     FULL_TIME = 'Full Time'
