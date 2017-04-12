@@ -94,5 +94,6 @@ def update(request):
                                                                   'user_form': user_form,
                                                                   'work': work,
                                                                   'project': project,
+                                                                  'skills': request.user.student.skills.all(),
                                                                   'education': education})
 

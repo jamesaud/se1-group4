@@ -42,16 +42,35 @@
 
                   <div class="rp bra brb agk">
                     <div class="rq">
-                      <h6 class="agd">About Me</h6>
+                      <h5 class="agd">About Me</h6>
 
-                        <i>{{ request.user.short_description }}</i>
-                      <!--<ul class="dc ayn">
-                        <li><span class="axr h bbu agc"></span>Went to <a href="#">Oh, Canada</a>
-                        <li><span class="axr h boj agc"></span>Became friends with <a href="#">Obama</a>
-                        <li><span class="axr h bgh agc"></span>Worked at <a href="#">Github</a>
-                        <li><span class="axr h bgx agc"></span>Lives in <a href="#">San Francisco, CA</a>
-                        <li><span class="axr h big agc"></span>From <a href="#">Seattle, WA</a>
-                      </ul>-->
+                      {% if request.user.is_student %}
+                        <ul class="dc ayn">
+                          <h6>Recent Post</h6>
+                          {% with post=request.user.post_set.first %}
+                          <li><span class="axr h bbu agc"></span><i>{{post.description}}</i></li>
+                          {% endwith %}
+                            <h6>Recent Connection</h6>
+                          {% with connection=request.user.connections.first %}
+                            <li><span class="axr h bbu agc"></span><i href="#"><a href='{{connection.get_absolute_url}}'>{{connection.get_name}}</a></i></li>
+                          {% endwith %}
+                          <h6>Recent Education</h6>
+                          {% with education=request.user.student.education_set.first %}
+                          <li><span class="axr h bbu agc"></span><i>{{education.level}}</i> at <i>{{education.institution_name}}</i></li>
+                          {% endwith %}
+                          <h6>Recent Work</h6>
+                          {% with work=request.user.student.workexperience_set.first %}
+                          <li><span class="axr h bbu agc"></span><i href="#">{{work.title}}</i> as {{work.position}}</li>
+                          {% endwith %}
+
+                          
+                          
+                        </ul>
+
+                      {% else %}
+
+                      {% endif %}
+
                     </div>
                   </div>
 

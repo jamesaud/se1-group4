@@ -36,7 +36,11 @@
     $('input.date').datepicker({
     });
     </script>
-
+<script>
+  {% for skill in skills %}
+document.getElementById('id_skill').value+='{{skill.skill}}, ' ; 
+  {% endfor %}
+</script>
 {% endblock %}
 
 
