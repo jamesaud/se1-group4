@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
+from django.http import JsonResponse
 from django.contrib import messages
 
 from .jobForm import jobForm
