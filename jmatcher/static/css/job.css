@@ -87,7 +87,7 @@ text-decoration: none;
   box-shadow: 0px 2px 40px 0 rgba(0,0,0,0.1);
 
 }
-#timeline .listing img,.info,.job_type,.apply_span{
+#timeline .listing img,.info,.job_type,.apply_span,.follow_user{
   display: table-cell;
   vertical-align: middle;
   font-size: 0.9em;
@@ -121,7 +121,7 @@ text-decoration: none;
 .job_info span{
   margin: 0 .75em;
 }
-.job_type{
+.job_type,.follow_user{
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.75em;
@@ -130,6 +130,7 @@ text-decoration: none;
   padding-top: .6em;
   width: 100px;
 }
+
 .apply_span{
   text-transform: uppercase;
   font-weight: 700;
@@ -148,6 +149,9 @@ text-decoration: none;
   position: absolute;
   left:-20px;
   top:27px;
+}
+.follow_user:before{
+  background-color: transparent !important;
 }
 .full_time{
   color: #fd7576;

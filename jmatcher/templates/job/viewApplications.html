@@ -35,7 +35,6 @@
 
 
   {% if applicants %}
-      <ul class="list-group">
         {% for applicant in applicants %}
             		<ul id="timeline">
                           <a href="#">
@@ -46,7 +45,6 @@
                               </a>
                               </div>
                               <div class="info">
-                              <!--Replace it with user profile URL and user name-->
                                 <span class="job_title"><a href = "{{applicant.user.get_absolute_url}}"> {{applicant.user.get_name}}</a></span>
                                 <span class="job_info"> Looking for {{applicant.position}}</span>
                               </div>
