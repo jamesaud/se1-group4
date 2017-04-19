@@ -165,8 +165,9 @@
           $(function () {
       $('[data-toggle="popover"]').popover()
     })
-    </script>
 
+    {% if request.user.is_authenticated %}
+    </script>
         <!-- test -->
         <script src="{% static 'web-widget/SendBird.min.js' %}"></script>
         <script src="{% static 'web-widget/build/widget.SendBird.js' %}"></script>
@@ -183,9 +184,9 @@
               console.log(response, error);
             });
         });
-
-
         </script>
+
+        {% endif %}
     {% endblock javascript %}
 
   {% block extra_js %}

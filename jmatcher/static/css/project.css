@@ -26,3 +26,9 @@
   display: block !important; }
 
 /*# sourceMappingURL=project.css.map */
+
+
+/* Hide logout for chat */
+.ic-option{
+  display: none !important;
+}
