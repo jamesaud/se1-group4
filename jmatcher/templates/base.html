@@ -34,6 +34,10 @@
 
   <body>
 
+    <!-- test -->
+      <div id="sb_widget"></div>
+    <!--- /test -->
+
     <div class="m-b-1">
       <nav class="navbar navbar-dark navbar-static-top bg-inverse">
         <div class="container">
@@ -163,6 +167,25 @@
     })
     </script>
 
+        <!-- test -->
+        <script src="{% static 'web-widget/SendBird.min.js' %}"></script>
+        <script src="{% static 'web-widget/build/widget.SendBird.js' %}"></script>
+        <script>
+          sbWidget.start('ACEBDEDC-F33D-4E64-82DA-C142B2E106A1');
+        </script>
+        <script>
+        var sb = new SendBird({
+            appId: 'ACEBDEDC-F33D-4E64-82DA-C142B2E106A1',
+        });
+
+        sb.connect('{{ request.user.username }}', function(user, error) {
+             sb.updateCurrentUserInfo("{{ request.user.get_name }}", "{{ request.user.get_absolute_url }}", function(response, error) {
+              console.log(response, error);
+            });
+        });
+
+
+        </script>
     {% endblock javascript %}
 
   {% block extra_js %}
