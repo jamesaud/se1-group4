@@ -36,7 +36,7 @@
         {% for job in jobs %}
             <li class="list-group-item">
                 <a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a>
-              <p>{{job.description}}</p>
+              <p>{{job.description|truncatewords:40}}<a href = "{% url 'job:job_detail' job.id %}"> see more </a></p>
             </li>
         {% endfor %}
   {% else %}

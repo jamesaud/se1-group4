@@ -49,11 +49,13 @@
 
 {% block content %}
 <form action= "{% url 'job:postJob' %}" method="POST"> {% csrf_token %}
-<h2>Hello Post Job </h2>
-  <div class = "jobPost">
-    {{employer | crispy}}
+<h2>Post a Job</h2>
+  <div class = "jobPost row">
+	  <div class="col-md-12">
+	  	{{employer | crispy}}
+	  </div>
   </div>
-  <input type = "submit" value = "submit">
+  <input type = "submit" value = "Post Job">
 </form>
 {% endblock content %}
 
