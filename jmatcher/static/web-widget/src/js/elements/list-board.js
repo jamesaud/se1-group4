@@ -8,7 +8,7 @@ const OPTION_TOOLTIP_TEXT = 'Log out';
 const NEW_CHAT_TOOLTIP_TEXT = 'New Message';
 
 const TITLE_TOP_LOGIN = 'SendBird Widget';
-const TITLE_TOP_CHANNEL = 'Channel List';
+const TITLE_TOP_CHANNEL = 'Current Chats';
 const TITLE_LOGIN_USER_ID = 'USER ID';
 const TITLE_LOGIN_NICKNAME = 'NICKNAME';
 const TITLE_LOGIN_BTN = 'Start Chat';

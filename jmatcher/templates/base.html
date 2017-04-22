@@ -188,6 +188,7 @@
         </script>
 
         <script>
+          $(".board-top > .title").text("JUST A TEST");
           $( ".ic-new-chat" ).click(function() {
             console.log("start");
 
@@ -200,7 +201,6 @@
             // Run while loading to ensure user can't see names disappear.
             for (i=0; i<30; i++){
               setTimeout(function() {
-
                       $(".user-content").closest('ul');
                       $( ".user-content > ul" ).children('li').each(function () {
                         var name = $(this).first('.nickname').text();
@@ -213,6 +213,7 @@
             }
           });
         </script>
+
 
         {% endif %}
     {% endblock javascript %}
