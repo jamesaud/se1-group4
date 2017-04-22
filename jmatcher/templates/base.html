@@ -167,7 +167,8 @@
     })
     </script>
 
-        <!-- test -->
+    {% if request.user.is_authenticated %}
+        <!-- Chat Code -->
         <script src="{% static 'web-widget/SendBird.min.js' %}"></script>
         <script src="{% static 'web-widget/build/widget.SendBird.js' %}"></script>
         <script>
@@ -179,13 +180,41 @@
         });
 
         sb.connect('{{ request.user.username }}', function(user, error) {
+             // Auto Sign-In
              sb.updateCurrentUserInfo("{{ request.user.get_name }}", "{{ request.user.get_absolute_url }}", function(response, error) {
               console.log(response, error);
             });
         });
-
-
         </script>
+
+        <script>
+          $( ".ic-new-chat" ).click(function() {
+            console.log("start");
+
+            var s = new Set();
+            {% for connection in request.user.connections.all %}
+              s.add("{{connection.get_name}}");
+            {% endfor %}  
+            
+            var delay = 100;
+            // Run while loading to ensure user can't see names disappear.
+            for (i=0; i<30; i++){
+              setTimeout(function() {
+
+                      $(".user-content").closest('ul');
+                      $( ".user-content > ul" ).children('li').each(function () {
+                        var name = $(this).first('.nickname').text();
+                        if (!s.has(name)){
+                          $(this).remove();
+                        }
+                      });
+
+              }, delay * i);
+            }
+          });
+        </script>
+
+        {% endif %}
     {% endblock javascript %}
 
   {% block extra_js %}
