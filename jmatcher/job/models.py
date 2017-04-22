@@ -40,6 +40,9 @@ class Job(models.Model):
     user = models.ForeignKey(User)
     skills = models.ManyToManyField(Skill, null=True, related_name="reqskills")
     applications = models.ManyToManyField(Student, through='JobApplication',related_name="applications")
+    education_weightage = models.IntegerField(default=33)
+    experience_weight = models.IntegerField(default=33)
+    skills_weight = models.IntegerField(default=33)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
