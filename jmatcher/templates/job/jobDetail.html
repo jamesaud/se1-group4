@@ -44,8 +44,10 @@
       {% else %}
       <button type="button" class="btn"><a href="{% url 'job:jobApply' %}">Apply</a></button>
       {% endif %}
-
+    {% else %}
+    <p>Applied</p>
     {% endif %}
+
     
     </ul>
 <br>

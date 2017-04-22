@@ -133,7 +133,6 @@ def job_detail(request, job_id):
     if request.method == 'GET':
         context = {}
         if request.user.is_student():
-            print("Here---------------------")
             student = request.user.student
             applied_jobs = student.applications.all()
             job = Job.objects.get(pk=job_id);
@@ -144,6 +143,8 @@ def job_detail(request, job_id):
             context['job_applied'] = job_applied
         else:
             job_show_detail = Job.objects.get(pk=job_id);
+            print(job_show_detail.user.username)
+            print("Done")
             context['job_show_detail'] = job_show_detail
         return render(request, template_name='job/jobDetail.html', context=context)
     else:
