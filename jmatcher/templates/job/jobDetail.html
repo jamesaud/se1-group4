@@ -5,7 +5,7 @@
     <h2>
     {{job_show_detail.post_name}}
     </h2>
-<br>
+    <br>
     <ul class="list-group">
         <li class='list-group-item list-group-item-warning'><h4>Posted By: <a href="{% url 'employers:home' job_show_detail.user.username %}">{{ job_show_detail.user.employer.company_name }}</a></h4></li>
     <li class='list-group-item'>
@@ -30,13 +30,23 @@
     </li>
 
     <li class='list-group-item'>
-      <b>Skills:</b>
+      <b>Skills Needed:</b>
       {% for skill in job_show_detail.skills.all %}
         {{skill.skill}}
         {% empty %}
         No skills required.
       {% endfor %}
     </li>
+    <br>
+    {% if request.user.is_student %}
+      {% if job_applied %}
+      <button type="button" class="btn">Applied</button>
+      {% else %}
+      <button type="button" class="btn"><a href="{% url 'job:jobApply' %}">Apply</a></button>
+      {% endif %}
+
+    {% endif %}
+    
     </ul>
 <br>
 

@@ -132,8 +132,19 @@ def postSuccess(request):
 def job_detail(request, job_id):
     if request.method == 'GET':
         context = {}
-        job_show_detail = Job.objects.get(pk=job_id);
-        context['job_show_detail'] = job_show_detail
+        if request.user.is_student():
+            print("Here---------------------")
+            student = request.user.student
+            applied_jobs = student.applications.all()
+            job = Job.objects.get(pk=job_id);
+            if job in applied_jobs:
+                job_applied = True
+            else:
+                job_applied = False
+            context['job_applied'] = job_applied
+        else:
+            job_show_detail = Job.objects.get(pk=job_id);
+            context['job_show_detail'] = job_show_detail
         return render(request, template_name='job/jobDetail.html', context=context)
     else:
         return render(request, template_name='job/employerPost.html')
@@ -156,9 +167,8 @@ def jobEdit(request, job_id):
         return redirect('job:job_detail', job_id=job_id)
     return render(request, template_name='job/postJob.html', context={'employer': form})
 
-def jobApply(request):
+def jobApply(request, job_id="3"):
     job_id = request.POST.get("job_id")
-
     job = Job.objects.get(pk=job_id)
     user = request.user
 
@@ -166,9 +176,6 @@ def jobApply(request):
     job_application.save()
     response = JsonResponse({'message': "Success"})
     return response
-
-
-
 
 def jobPaginate(request, list, num):
     paginator = Paginator(list, num)
