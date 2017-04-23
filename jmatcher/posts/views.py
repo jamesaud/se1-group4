@@ -48,7 +48,21 @@ def get_all_posts(request):
         posts.add(post)
 
     context = {}
-    context['posts'] = posts
+    context['posts'] = reversed(list(posts))
+
+
+    # NEW
+    form = PostForm(request.POST or None)
+    if request.method == "POST":
+        # calling the postform class and it is giving a dictionary and it validates
+        if form.is_valid():
+            post = Post(description=form.cleaned_data['description'], user=request.user)
+            post.save()
+
+    context.update({
+        "form": form,
+    })
+
     return render(request, "posts/showAllPosts.html", context)
 
 

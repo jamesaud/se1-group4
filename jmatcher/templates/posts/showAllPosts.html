@@ -2,17 +2,34 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-		<a href="{% url 'posts:post_status' %}" class='btn btn-primary'>Create New Post</a>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<form class="form-horizontal" method="post" action="{% url 'posts:get_all_posts' %}">
+		{% csrf_token %}
+
+		<div class='col-sm-7 col-md-9'>
+		{{form|crispy}}
+		</div>
+				<div class='col-sm-5 col-md-3'>
+		<button type='submit' href="{% url 'posts:post_status' %}" class='btn btn-primary' style="display: inline;">Create New Post</button>
+		</div>
+
+	</form>
 		<br>
 		<br>
 		{% if posts %}
 			<ul class='list-group'>
 				{% for post in posts %}
 					<li class='list-group-item'>
-						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5><p>Posted by:
+						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5>
+
+						<p>Posted by:
 							<a href="{{  post.user.get_absolute_url }}">{{post.user.username}}</a>,
 						   {{post.get_comment_count}} Comments, {{post.total_likes}} Likes, {{post.total_shares}} Shares
 						</p>
+					<button id="like" post-id={{post.id}} class="like btn btn-primary">Like</button>
+					<button id="share" post-id={{post.id}} class="share btn btn-warning">Share</button>
+
 					</li>
 					<br>
 				{% endfor %}
@@ -21,3 +38,47 @@
 			<p>No posts found</p>
 		{% endif %}
 {% endblock content %}
+
+
+{% block javascript %}
+{{block.super}}
+<script>
+
+    $(".like").click(function(e){
+		var like = $(this);
+    	$.ajax({
+    		type: "POST",
+    		url: "{% url 'posts:like_post' %}",
+    		data: {"post_id": like.attr('post-id'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    		dataType: "json",
+    		success: function(response) {
+    			like.text(response.like_button_text);
+    		},
+    		error: function(rs, e){
+    			console.log(rs.responseText)
+    		}
+    	});
+
+    	e.preventDefault();
+    });
+
+    $(".share").click(function(e){
+		let share = $(this);
+		$.ajax({
+    		type: "POST",
+    		url: "{% url 'posts:share_post' %}",
+    		data: {"post_id": share.attr('post-id'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    		dataType: "json",
+    		success: function(response) {
+    			share.text(response.share_button_text);
+    		},
+    		error: function(rs, e){
+    			console.log(rs.responseText)
+    		}
+    	});
+
+    	e.preventDefault();
+    });
+
+  </script>
+{% endblock %}
