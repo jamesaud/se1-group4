@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
   <div class = "postDetail">
   <br>
@@ -37,18 +38,23 @@
         No skills required.
       {% endfor %}
     </li>
-    <br>
-    {% if request.user.is_student %}
-      {% if job_applied %}
-      <button type="button" class="btn">Applied</button>
-      {% else %}
-      <button type="button" class="btn"><a href="{% url 'job:jobApply' %}">Apply</a></button>
-      {% endif %}
-    {% else %}
-    <p>Applied</p>
-    {% endif %}
-
-    
+  {% if request.user.is_student %}
+     {% if job_applied %}
+        <li class='list-group-item'>
+          <label>You have applied for this Job</label>
+        </li>
+     {% else %}
+     <form action= "{% url 'job:jobApply' job_show_detail.pk %}" method="POST" enctype="multipart/form-data"> 
+      {% csrf_token %}
+       <li class='list-group-item'>
+          {{job_application_form | crispy}}
+        </li>
+        <li class='list-group-item'>
+          <button type="submit" class="btn">Apply</button>
+        </li>
+     </form>
+     {% endif %}
+  {% endif %}
     </ul>
 <br>
 

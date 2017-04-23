@@ -1,7 +1,15 @@
 from django import forms
 from django.forms import Textarea
 
-from .models import Job
+from .models import Job, JobApplication
+
+class jobApplicationForm(forms.ModelForm):
+	class Meta:
+		model = JobApplication
+		fields = ('attachment',)
+		labels = {
+		'attachment': 'Resume/Cover Letter',
+		}
 
 class jobForm(forms.ModelForm):
 	skill = forms.CharField()

@@ -6,29 +6,6 @@
 {{block.super}}
 <link href="{% static 'css/job.css' %}" rel="stylesheet">
 {% endblock %}
-
-
-{% block javascript %}
-{{ block.super }}
-  <script>
-    function viewUser(event, job_id){
-      $.ajax({
-        type: "POST",
-        url: "{% url 'job:jobApply'%}",
-        data: {"job_id": job_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-        dataType: "json",
-        success: function(response) {
-          document.getElementById(job_id).innerHTML = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied'
-        },
-        error: function(rs,e){
-          console.log(rs.responseText)
-        }
-      });
-    }
-  </script>
-{% endblock %}
-
-
 {% block content %}
 
 <h2>All Job Applicants</h2>

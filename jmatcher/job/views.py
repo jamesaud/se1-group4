@@ -6,10 +6,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 
-from .jobForm import jobForm
+from .jobForm import jobForm, jobApplicationForm
 
 from .models import Job, JobApplication, Skill, Location
 from jmatcher.users.models import Position
+from django.contrib import messages
 
 def jobTest(request):
     return render(request, template_name='job/jobTest.html')
@@ -141,11 +142,9 @@ def job_detail(request, job_id):
             else:
                 job_applied = False
             context['job_applied'] = job_applied
-        else:
-            job_show_detail = Job.objects.get(pk=job_id);
-            print(job_show_detail.user.username)
-            print("Done")
-            context['job_show_detail'] = job_show_detail
+        context['job_application_form'] = jobApplicationForm()
+        job_show_detail = Job.objects.get(pk=job_id);
+        context['job_show_detail'] = job_show_detail
         return render(request, template_name='job/jobDetail.html', context=context)
     else:
         return render(request, template_name='job/employerPost.html')
@@ -168,15 +167,16 @@ def jobEdit(request, job_id):
         return redirect('job:job_detail', job_id=job_id)
     return render(request, template_name='job/postJob.html', context={'employer': form})
 
-def jobApply(request, job_id="3"):
-    job_id = request.POST.get("job_id")
+def jobApply(request, job_id):
     job = Job.objects.get(pk=job_id)
     user = request.user
 
-    job_application = JobApplication(student=user.student, job=job)
-    job_application.save()
-    response = JsonResponse({'message': "Success"})
-    return response
+    appl_form = jobApplicationForm(request.POST or None, request.FILES or None)
+    if (request.method == 'POST') and appl_form.is_valid():
+        job_application = JobApplication(student=user.student, job=job, attachment=appl_form.cleaned_data['attachment'])
+        job_application.save()
+        messages.success(request, 'You have successfully applied to this Job')
+        return redirect('job:job_detail', job_id=job_id) 
 
 def jobPaginate(request, list, num):
     paginator = Paginator(list, num)
