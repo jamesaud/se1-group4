@@ -20,12 +20,6 @@ class Job(models.Model):
         ('Busi', "Business"),
         ('Medi', "Medicine"),
     )
-    '''
-    LOCATION = (
-        ('CA', 'California'),
-        ('WA', 'Washington'),
-    )
-    '''
     EMPLOYMENT_TYPE = (
         ('INTERN', 'Intern'),
         ('FULL_TIME', "Full Time"),
@@ -35,11 +29,14 @@ class Job(models.Model):
     employment_type = models.CharField(max_length = 200, null = True, choices = EMPLOYMENT_TYPE);
     industry =  models.CharField(max_length = 200, null = True, choices = INDUSTRY_TYPE)
     location = models.ForeignKey(Location, related_name='location', null=True)
-    experience = models.CharField(max_length = 200, null=True)
+    experience = models.IntegerField()
     description = models.TextField(null=True)
     user = models.ForeignKey(User)
     skills = models.ManyToManyField(Skill, null=True, related_name="reqskills")
     applications = models.ManyToManyField(Student, through='JobApplication',related_name="applications")
+    education_weightage = models.IntegerField(default=34)
+    experience_weightage = models.IntegerField(default=33)
+    skills_weightage = models.IntegerField(default=33)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -53,6 +50,7 @@ class Job(models.Model):
 class JobApplication(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    attachment = models.FileField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

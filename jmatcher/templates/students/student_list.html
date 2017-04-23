@@ -1,24 +1,41 @@
 {% extends "base.html" %}
-{% load static i18n %}
-{% block title %}Members{% endblock %}
+{% load static %}
+
+{% block title %}All Students{% endblock %}
+{% block css %}
+{{block.super}}
+<link href="{% static 'css/job.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
-<div class="container">
-  <h2>Students</h2>
-<br>
-
-  <div class="list-group">
+{% if student_list %}
     {% for student in student_list %}
-          <a href="{% url 'students:home' student.user.username %}" class="list-group-item">
-            <h4 class="list-group-item-heading">{{ student.user.get_full_name }}</h4>
-            <p>
-             {% for skill in student.skills.all %}
-                {{ skill.skill }}
-            {% endfor %}
-            </p>
-          </a>
+                    <ul id="timeline">
+                          <a href="#">
+                            <li class="listing clearfix">
+                              <div class="image_wrapper">
+                              <a href="{{student.user.get_absolute_url}}">
+                                <img src="{{ student.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
+                              </a>
+                              </div>
+                              <div class="info">
+                                <span class="job_title"><a href = "{{student.user.get_absolute_url}}"> {{student.user.get_name}}</a></span>
+                                <span class="job_info"> Looking for {{student.position}}</span>
+                              </div>
+                              <span class="job_type follow_user">
+                                    {% if student.user not in request.user.connections.all %}
+                                        <a class="btn btn-outline-success" href="{% url 'users:follow' student.user.username %}">Follow</a>
+                                    {% else %}
+                                        <a class="btn btn-outline-danger" href="{% url 'users:unfollow' student.user.username %}">Unfollow</a>
+                                    {% endif %}
+                              </span>
+                            </li>
+                          </a>
+                    </ul>
     {% endfor %}
-  </div>
-</div>
+{% else %}
+      <p> No student has yet registered in the portal</p>
+{% endif %}
+
 {% endblock content %}

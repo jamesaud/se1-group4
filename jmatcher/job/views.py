@@ -6,10 +6,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 
-from .jobForm import jobForm
+from .jobForm import jobForm, jobApplicationForm
 
 from .models import Job, JobApplication, Skill, Location
 from jmatcher.users.models import Position
+from django.contrib import messages
 
 def jobTest(request):
     return render(request, template_name='job/jobTest.html')
@@ -19,25 +20,29 @@ def listJob(request):
     user = request.user
     student = user.student
     applied_jobs = student.applications.all()
-    all_jobs = Job.objects.all()
+    all_jobs = Job.objects.all() 
 
     for job in all_jobs:
-        job.match_percent = get_job_match_percent(user, job)
+        job.match_percent = get_job_match_percent(user.student, job)
+        
         if job in applied_jobs:
             job.applied = True
         else:
             job.applied = False
 
-    return render(request, 'job/jobList.html', context={'jobs': all_jobs, 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
+    sort = lambda j: j.match_percent
+    return render(request, 'job/jobList.html', context={'jobs': sorted(all_jobs, key=sort, reverse=True), 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
 
-def get_job_match_percent(user, job):
+def get_job_match_percent(student, job):
+
     total_req_skills = job.skills.all().count()
+    print(total_req_skills)
     match_skills = 0
-    for skill in user.student.skills.all():
+    for skill in student.skills.all():
         if skill in job.skills.all():
             match_skills += 1
-        match_percent = (match_skills / (total_req_skills + 1)) * 100
-        return match_percent
+    match_percent = (match_skills / (total_req_skills + 1)) * 100
+    return match_percent
 
 '''
 TODO: Write the html page
@@ -45,10 +50,10 @@ TODO: Write the html page
 
 def viewApplications(request, job_id):
     job = Job.objects.get(pk=job_id)
-    applicants = job.applications.all()
-    for applicant in applicants:
-        applicant.match_percent = get_job_match_percent(applicant.user, job)
-    return render(request, 'job/viewApplications.html', context={'applicants': applicants})
+    applications = JobApplication.objects.filter(job=job)
+    for application in applications:
+        application.match_percent = get_job_match_percent(application.student, job)
+    return render(request, 'job/viewApplications.html', context={'applications': applications})
 
 def postJob(request):
     form = jobForm()
@@ -132,6 +137,16 @@ def postSuccess(request):
 def job_detail(request, job_id):
     if request.method == 'GET':
         context = {}
+        if request.user.is_student():
+            student = request.user.student
+            applied_jobs = student.applications.all()
+            job = Job.objects.get(pk=job_id);
+            if job in applied_jobs:
+                job_applied = True
+            else:
+                job_applied = False
+            context['job_applied'] = job_applied
+        context['job_application_form'] = jobApplicationForm()
         job_show_detail = Job.objects.get(pk=job_id);
         context['job_show_detail'] = job_show_detail
         return render(request, template_name='job/jobDetail.html', context=context)
@@ -156,19 +171,16 @@ def jobEdit(request, job_id):
         return redirect('job:job_detail', job_id=job_id)
     return render(request, template_name='job/postJob.html', context={'employer': form})
 
-def jobApply(request):
-    job_id = request.POST.get("job_id")
-
+def jobApply(request, job_id):
     job = Job.objects.get(pk=job_id)
     user = request.user
 
-    job_application = JobApplication(student=user.student, job=job)
-    job_application.save()
-    response = JsonResponse({'message': "Success"})
-    return response
-
-
-
+    appl_form = jobApplicationForm(request.POST or None, request.FILES or None)
+    if (request.method == 'POST') and appl_form.is_valid():
+        job_application = JobApplication(student=user.student, job=job, attachment=appl_form.cleaned_data['attachment'])
+        job_application.save()
+        messages.success(request, 'You have successfully applied to this Job')
+        return redirect('job:job_detail', job_id=job_id) 
 
 def jobPaginate(request, list, num):
     paginator = Paginator(list, num)

@@ -1,42 +1,60 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
   <div class = "postDetail">
   <br>
     <h2>
     {{job_show_detail.post_name}}
     </h2>
-<br>
+    <br>
     <ul class="list-group">
         <li class='list-group-item list-group-item-warning'><h4>Posted By: <a href="{% url 'employers:home' job_show_detail.user.username %}">{{ job_show_detail.user.employer.company_name }}</a></h4></li>
     <li class='list-group-item'>
-      Employment Type:
+      <b>Employment Type:</b>
     {{job_show_detail.employment_type}}
     </li>
     <li class='list-group-item'>
-      Industry:
+      <b>Industry:</b>
     {{job_show_detail.industry}}
     </li>
     <li class='list-group-item'>
-      Location:
+      <b>Location:</b>
     {{job_show_detail.location.city}}, {{ job_show_detail.location.state }}
     </li>
     <li class='list-group-item'>
-      Experience:
+      <b>Experience:</b>
     {{job_show_detail.experience}}
     </li>
     <li class='list-group-item'>
-      Description:
-    {{job_show_detail.description}}
+      <b>Description:</b>
+    {{job_show_detail.description | linebreaks}}
     </li>
 
     <li class='list-group-item'>
-      Skills:
+      <b>Skills Needed:</b>
       {% for skill in job_show_detail.skills.all %}
         {{skill.skill}}
         {% empty %}
         No skills required.
       {% endfor %}
     </li>
+  {% if request.user.is_student %}
+     {% if job_applied %}
+        <li class='list-group-item'>
+          <label><b>You have applied for this Job</b></label>
+        </li>
+     {% else %}
+     <form action= "{% url 'job:jobApply' job_show_detail.pk %}" method="POST" enctype="multipart/form-data"> 
+      {% csrf_token %}
+       <li class='list-group-item'>
+          {{job_application_form | crispy}}
+        </li>
+        <li class='list-group-item'>
+          <button type="submit" class="btn">Apply</button>
+        </li>
+     </form>
+     {% endif %}
+  {% endif %}
     </ul>
 <br>
 

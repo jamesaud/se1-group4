@@ -20,6 +20,7 @@
 {% block javascript %}
     {{ block.super }}
   <script>
+  {% if show_js %}
   $( function(e) {
     var availableTags = [
       {% for friend in friends %}
@@ -47,6 +48,7 @@
     });
   } );
 
-
+  {% endif %}
+  
   </script>
 {% endblock javascript %}

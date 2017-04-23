@@ -3,7 +3,9 @@
 
 
 {% block css %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 {{block.super}}
+
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
@@ -11,6 +13,11 @@
 {% block content %}
 	<div class="container">
 		<h3 class='text-primary'>{{post.description}}</h3>
+		<h1>Post Page</h1>
+		<h3>Description: {{post.description}}</h3>
+        
+		<button id="like" class="btn btn-default">{{like_action}}</button>
+		<button id="share" class="btn btn-default">{{share_action}}</button>
 		<form class="form-horizontal" method="post" action="{% url 'posts:get_post' post.id %}">
     	{% csrf_token %}
 		{{comment_form | crispy}}

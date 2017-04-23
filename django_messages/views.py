@@ -71,9 +71,11 @@ def compose(request, recipient=None, form_class=ComposeForm,
         ``template_name``: the template to use
         ``success_url``: where to redirect after successfull submission
     """
+    if recipient == None:
+        show_js = True
+    else:
+        show_js = False
     if request.method == "POST":
-        print("POST DATA")
-        print(request.POST)
         sender = request.user
         form = form_class(request.POST, recipient_filter=recipient_filter)
         if form.is_valid():
@@ -94,6 +96,7 @@ def compose(request, recipient=None, form_class=ComposeForm,
                   context={
                         'form': form,
                         'friends': [user for user in request.user.connections.all()],
+                        'show_js': show_js
                     })
 
 @login_required

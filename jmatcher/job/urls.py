@@ -41,7 +41,7 @@ urlpatterns = [
         view = views.viewApplications,
         name = 'viewApplications'),
 
-    url(r'^jobApply/$',
+    url(r'^jobApply/(?P<job_id>[\d]+)/$',
         view=views.jobApply,
         name='jobApply'),
 

@@ -22,9 +22,9 @@
                         <br><br><br>
                             {% else %}
                                     {% if user not in request.user.connections.all %}
-                                        <a class="btn btn-outline-success" href="{% url 'users:follow' user.username %}">Connect</a>
+                                        <a class="btn btn-outline-success" href="{% url 'users:follow' user.username %}">Follow</a>
                                     {% else %}
-                                        <a class="btn btn-outline-danger" href="{% url 'users:unfollow' user.username %}">Disconnect</a>
+                                        <a class="btn btn-outline-danger" href="{% url 'users:unfollow' user.username %}">Unfollow</a>
                                     {% endif %}
                                                     <br><br><br>
 
