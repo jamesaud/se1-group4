@@ -23,7 +23,8 @@ def listJob(request):
     all_jobs = Job.objects.all()
 
     for job in all_jobs:
-        job.match_percent = get_job_match_percent(user, job)
+        job.match_percent = get_job_match_percent(user.student, job)
+        
         if job in applied_jobs:
             job.applied = True
         else:
@@ -31,14 +32,16 @@ def listJob(request):
 
     return render(request, 'job/jobList.html', context={'jobs': all_jobs, 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
 
-def get_job_match_percent(user, job):
+def get_job_match_percent(student, job):
+
     total_req_skills = job.skills.all().count()
+    print(total_req_skills)
     match_skills = 0
-    for skill in user.student.skills.all():
+    for skill in student.skills.all():
         if skill in job.skills.all():
             match_skills += 1
-        match_percent = (match_skills / (total_req_skills + 1)) * 100
-        return match_percent
+    match_percent = (match_skills / (total_req_skills + 1)) * 100
+    return match_percent
 
 '''
 TODO: Write the html page
@@ -46,10 +49,10 @@ TODO: Write the html page
 
 def viewApplications(request, job_id):
     job = Job.objects.get(pk=job_id)
-    applicants = job.applications.all()
-    for applicant in applicants:
-        applicant.match_percent = get_job_match_percent(applicant.user, job)
-    return render(request, 'job/viewApplications.html', context={'applicants': applicants})
+    applications = JobApplication.objects.filter(job=job)
+    for application in applications:
+        application.match_percent = get_job_match_percent(application.student, job)
+    return render(request, 'job/viewApplications.html', context={'applications': applications})
 
 def postJob(request):
     form = jobForm()

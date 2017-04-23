@@ -90,7 +90,7 @@ text-decoration: none;
 #timeline .listing img,.info,.job_type,.apply_span,.follow_user{
   display: table-cell;
   vertical-align: middle;
-  font-size: 0.9em;
+  font-size: 1em;
   color: #74718f;
 
 }
@@ -138,6 +138,7 @@ text-decoration: none;
   position: relative;
   white-space: nowrap;
   padding-top: .6em;
+  padding-left: .6em
   width: 100px;
 }
 .job_type:before{
@@ -168,11 +169,11 @@ background-color:#fd7576;
 background-color:#fec85d;
 }
 .freelance{
-  color: #4db8de;
+  color: #32CD32;
 
 }
 .freelance:before{
-background-color:#4db8de;
+background-color:#32CD32;
 }
 .contract{
   color: #a378fc;

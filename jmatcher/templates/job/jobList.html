@@ -11,23 +11,7 @@
 
 {% block javascript %}
 {{ block.super }}
-  <script>
-    function job_apply(event, job_id){
-      $.ajax({
-        type: "POST",
-        url: "{% url 'job:jobApply'%}",
-        data: {"job_id": job_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-        dataType: "json",
-        success: function(response) {
-          document.getElementById(job_id).innerHTML = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied'
-        },
-        error: function(rs,e){
-          console.log(rs.responseText)
-        }
-      });
-    }
 
-  </script>
 {% endblock %}
 
 
@@ -85,15 +69,20 @@
                                 <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
                                 <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location.city}},{{job.location.state}} <span>&bull;</span> {{job.created_at|date:'D-F-o'}}</span>
                               </div>
-                              <span class="job_type full_time">{{job.employment_type}}</span>
-                              <span class="job_type full_time">{{job.match_percent|floatformat}}% Match</span>
+                              {% if job.employment_type == 'FULL_TIME' %}
+                                <span class="job_type full_time">{{job.employment_type}}</span>
+                              {% endif %}
+                              {% if job.employment_type == 'INTERN' %}
+                                <span class="job_type part_time">{{job.employment_type}}</span>
+                              {% endif %}
+                              <span class="job_type freelance">{{job.match_percent|floatformat}}% Match</span>
                               {% if job.applied %}
                                   <span class="apply_span" id="{{job.id}}">
                                   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied
                                   </span>
                               {% else %}
                               <span class="apply_span" id="{{job.id}}">
-                        <button id="apply" class="btn btn-default" onclick="job_apply(event,{{job.id}})"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Apply</button>
+                              <a href="{% url 'job:job_detail' job.id %}"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Apply </a>
                               </span>
                               {% endif %}
                             </li>

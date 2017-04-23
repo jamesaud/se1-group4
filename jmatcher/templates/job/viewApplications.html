@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
 {{block.super}}
 <link href="{% static 'css/job.css' %}" rel="stylesheet">
@@ -11,21 +11,36 @@
 <h2>All Job Applicants</h2>
 
 
-  {% if applicants %}
-        {% for applicant in applicants %}
+  {% if applications %}
+        {% for application in applications %}
             		<ul id="timeline">
                           <a href="#">
                             <li class="listing clearfix">
                               <div class="image_wrapper">
-                              <a href="{{applicant.user.get_absolute_url}}">
-                                <img src="{{ applicant.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
+                              <a href="{{application.student.user.get_absolute_url}}">
+                                <img src="{{ application.student.user.get_image_url }}" style="height: 58px; width: auto;" alt="">
                               </a>
                               </div>
                               <div class="info">
-                                <span class="job_title"><a href = "{{applicant.user.get_absolute_url}}"> {{applicant.user.get_name}}</a></span>
-                                <span class="job_info"> Looking for {{applicant.position}}</span>
+                                <span class="job_title"><a href = "{{application.student.user.get_absolute_url}}"> {{application.student.user.get_name}}</a></span>
+                                <span class="job_info"> Looking for {{application.student.position}}</span>
                               </div>
-                              <span class="job_type full_time">{{applicant.match_percent|floatformat}}% Match</span>
+                              <span class="job_type freelance">{{application.match_percent|floatformat}}% Match
+                              </span>
+                              {% if application.attachment %}
+                                <span class="apply_span">
+                                <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+                                <a href="{{application.attachment.url}}">  Download Resume</a>
+                                </span>
+                              {% else %}
+                                <span class="apply_span">
+                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No Attachments
+                                </span> 
+                              {% endif %}
+                              <span class="apply_span">
+                              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                              <a href="{% url 'messages_compose_to' application.student.user.username %}">Message Applicant</a>
+                              </span>
                             </li>
                           </a>
                      </ul>

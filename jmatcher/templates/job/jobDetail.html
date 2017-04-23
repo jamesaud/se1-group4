@@ -41,7 +41,7 @@
   {% if request.user.is_student %}
      {% if job_applied %}
         <li class='list-group-item'>
-          <label>You have applied for this Job</label>
+          <label><b>You have applied for this Job</b></label>
         </li>
      {% else %}
      <form action= "{% url 'job:jobApply' job_show_detail.pk %}" method="POST" enctype="multipart/form-data"> 
