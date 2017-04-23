@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form class="form-horizontal" method="post" action="{% url 'students:education' %}">
+	{% csrf_token %}
+	{{ education|crispy }}
+	<div class="control-group">
+	  <div class="controls">
+	    <button type="submit" class="btn btn-primary">Submit</button>
+	  </div>
+	</div>
+</form>
+
+{% endblock %}
