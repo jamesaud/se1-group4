@@ -8,14 +8,16 @@
 
 {% endfor %}
 {% endif %}
-    {% if provider.name == 'Google' %}
-
+{% if provider.name == 'Google' %}
   <a title="{{provider.name}}"  socialaccount_provider {{provider.id}}"
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"> <img src ="{% static 'images/signup_google.png' %} "{{provider.name}} style="width:200px;height:200px </a>
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+<img src ="{% static 'images/signup_google.png' %} "{{provider.name}} style="width:200px; height:37px"></a>
         {% elif provider.name == 'Facebook' %}
 
             <a title="{{provider.name}}"  socialaccount_provider {{provider.id}}"
-            href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"> <img src ="{% static 'images/signup.png' %}"{{provider.name}} style="width:185px;height:185px</a>
+            href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"> <img src ="{% static 'images/signup.png' %}"{{provider.name}} style="width:185px;height:37px;"></a>
     {% endif %}
 {% endfor %}
+
+
 
