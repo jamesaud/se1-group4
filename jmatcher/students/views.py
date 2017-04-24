@@ -51,7 +51,6 @@ def update(request):
     education = EducationInlineForm(request.POST or None, instance=request.user.student)
     project = ProjectInlineForm(request.POST or None, instance=request.user.student)
 
-
     form = StudentForm(request.POST or None, instance = request.user.student)
 
     user_form = UserForm(request.POST or None, request.FILES or None, instance=request.user)

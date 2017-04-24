@@ -7,19 +7,19 @@
 {{block.super}}
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% endblock %}
 
 
 {% block content %}
 	<div class="container">
 		<h3 class='text-primary'>{{post.description}}</h3>
-        
 		<form class="form-horizontal" method="post" action="{% url 'posts:get_post' post.id %}">
     	{% csrf_token %}
 		{{comment_form | crispy}}
 		<div class="control-group">
 	      	<div class="controls">
-	        <button type="submit" class="btn">Comment</button>
+	        <button type="submit" class="btn btn-primary">Comment</button>
 	        </div>
         </div>
         </form>
