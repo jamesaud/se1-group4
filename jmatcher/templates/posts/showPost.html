@@ -13,11 +13,7 @@
 {% block content %}
 	<div class="container">
 		<h3 class='text-primary'>{{post.description}}</h3>
-		<h1>Post Page</h1>
-		<h3>Description: {{post.description}}</h3>
         
-		<button id="like" class="btn btn-default">{{like_action}}</button>
-		<button id="share" class="btn btn-default">{{share_action}}</button>
 		<form class="form-horizontal" method="post" action="{% url 'posts:get_post' post.id %}">
     	{% csrf_token %}
 		{{comment_form | crispy}}
