@@ -1,3 +1,4 @@
+
 .alert-debug {
   background-color: #fff;
   border-color: #d6e9c6;
@@ -9,7 +10,8 @@
   color: #b94a48; }
 
 .navbar {
-  border-radius: 0px; }
+  border-radius: 0px;
+}
 
 @media (max-width: 47.9em) {
   .navbar-nav .nav-item {

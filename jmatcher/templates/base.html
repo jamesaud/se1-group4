@@ -32,15 +32,21 @@
 
   </head>
 
-  <body>
 
-    <!-- test -->
-      <div id="sb_widget"></div>
-    <!--- /test -->
 
+
+
+  <body style="background-image: url('{% static 'images/back2.jpg' %}')"no-repeat center center >
+    <img src="">
     <div class="m-b-1">
       <nav class="navbar navbar-dark navbar-static-top bg-inverse">
         <div class="container">
+
+         <!-- <a class="navbar-brand" href="/">jmatcher</a> -->
+          <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+            &#9776;
+          </button>
+
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -49,9 +55,10 @@
                 {% if request.user.is_authenticated %}
                   {% url 'posts:get_all_posts' %}
                  {% else %}
-                  {% url 'home' %}
+                 {% url 'home' %}
                 {% endif %}
-                ">JMatcher</a>
+                "><b><font color="#fed136">JMatcher</font></b>
+</a>
               </li>
 
             </ul>
@@ -60,35 +67,35 @@
 
               {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'students:list' %}">Find Students</a>
+                            <a class="nav-link" href="{% url 'students:list' %}"><font color="#fed136">Find Students</font></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'employers:list' %}">Find Employers</a>
+                            <a class="nav-link" href="{% url 'employers:list' %}"><font color="#fed136">Find Employers</font></a>
                         </li>
 
                   {% if request.user.is_employer %}
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'job:postJob' %}">Post Job</a>
+                            <a class="nav-link" href="{% url 'job:postJob' %}"><font color="#fed136">Post Job</font></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'job:employerPost' %}">My Job Posts</a>
+                            <a class="nav-link" href="{% url 'job:employerPost' %}"><font color="#fed136">My Job Posts</font></a>
                         </li>
                       {% else %}
                       <li class="nav-item">
-                          <a class="nav-link" href="{% url 'job:jobList' %}">All Jobs</a>
+                          <a class="nav-link" href="{% url 'job:jobList' %}"><font color="#fed136">All Jobs</font></a>
                         </li>
 
                    {% endif %}
 
                   <li class="nav-item">
-                          <a class="nav-link" href="{% url 'messages_inbox' %}">Messages</a>
+                      <a class="nav-link" href="{% url 'messages_inbox' %}"><font color="#fed136">Messages</font></a>
                   </li>
 
                   <li class="nav-item">
                           {% if request.user.is_employer %}
                               <a class="nav-link" href="{% url 'employers:home' request.user.username  %}">{% trans "Employer Profile" %}</a>
                           {% else %}
-                              <a class="nav-link" href="{% url 'students:home' request.user.username  %}">{% trans "My Profile" %}</a>
+                              <a class="nav-link" href="{% url 'students:home' request.user.username  %}"><font color="#fed136">{% trans "My Profile" %}</font></a>
                           {% endif %}
                     </li>
 
@@ -97,13 +104,13 @@
                            title="Notifications"
                            data-content="No New Notifications<br>
                             ">
-                          <i class="fa fa-bell"></i>
+                            <font color="#fed136"><i class="fa fa-bell"></i></font>
                         </a>
                     </li>
 
 
                     <li class="nav-item">
-                      <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+                        <a class="nav-link" href="{% url 'account_logout' %}"><font color="#fed136">{% trans "Sign Out" %}</font></a>
                     </li>
 
               {% else %}
@@ -142,7 +149,6 @@
     {% block modal %}{% endblock modal %}
 
     <!-- Le javascript
-    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     {% block javascript %}
       <!-- Required by Bootstrap v4 Alpha 4 -->
