@@ -4,7 +4,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<form class="form-horizontal" method="post" action="{% url 'posts:get_all_posts' %}">
+	<form class="form-horizontal row no-gutters" method="post" action="{% url 'posts:get_all_posts' %}">
 		{% csrf_token %}
 
 		<div class='col-sm-7 col-md-9'>
@@ -13,9 +13,7 @@
 				<div class='col-sm-5 col-md-3'>
 		<button type='submit' href="{% url 'posts:post_status' %}" class='btn btn-primary' style="display: inline;">Create New Post</button>
 		</div>
-
 	</form>
-		<br>
 		<br>
 		{% if posts %}
 			<ul class='list-group'>
