@@ -32,7 +32,11 @@
             <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
             <span class="job_info">{{user.employer.company_name}} <span>&bull;</span> {{job.location.city}}, {{job.location.state}} <span>&bull;</span> {{job.created_at|date:'D-F-o'}}</span>
           </div>
-          <span class="job_type full_time">{{job.employment_type}}</span>
+          {% if job.employment_type == 'FULL_TIME' %}
+            <span class="job_type full_time">{{job.employment_type}}</span>
+          {% else %}
+            <span class="job_type part_time">{{job.employment_type}}</span>
+          {% endif %}
           <span class="apply_span" id="{{job.id}}">
             <a href="{% url 'job:viewApplications' job.id %}">
               <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{job.total_applications}} Applications

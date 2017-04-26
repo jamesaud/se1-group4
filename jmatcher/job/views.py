@@ -11,6 +11,7 @@ from .jobForm import jobForm, jobApplicationForm
 from .models import Job, JobApplication, Skill, Location
 from jmatcher.users.models import Position
 from django.contrib import messages
+from datetime import timedelta
 
 def jobTest(request):
     return render(request, template_name='job/jobTest.html')
@@ -35,13 +36,43 @@ def listJob(request):
 
 def get_job_match_percent(student, job):
 
+    min_education = job.education_required
+    edu_list = ['Undergraduate', 'Graduate', 'PHD']
+    edu_match = 0
+    
+    if min_education == 'Undergraduate':
+        if student.education_set.filter(level__in = edu_list).exists():
+            edu_match = job.skills_weightage
+    elif min_education == 'Graduate':
+        edu_list.remove('Graduate')
+        if student.education_set.filter(level__in = edu_list).exists():
+            edu_match = job.skills_weightage
+    elif min_education == 'PHD':
+        edu_list.remove('Undergraduate')
+        edu_list.remove('Graduate')
+        if student.education_set.filter(level__in = edu_list).exists():
+            edu_match = job.skills_weightage
+    
+    min_work_exp = job.experience*365
+    student_work_exp = timedelta(0)
+    work_match = 0
+
+    for exp in student.workexperience_set.all():
+        student_work_exp += exp.end_date-exp.start_date
+
+    if student_work_exp.days > min_work_exp:
+        work_match = job.experience_weightage
+
+
     total_req_skills = job.skills.all().count()
-    print(total_req_skills)
     match_skills = 0
     for skill in student.skills.all():
         if skill in job.skills.all():
             match_skills += 1
-    match_percent = (match_skills / (total_req_skills + 1)) * 100
+    skill_match_percent = (match_skills / (total_req_skills + 1)) * 100
+    
+    match_percent = edu_match + work_match + ((job.skills_weightage/100)*skill_match_percent)
+    
     return match_percent
 
 '''
@@ -75,7 +106,11 @@ def postJob(request):
                          industry=form.cleaned_data['industry'],
                          experience=form.cleaned_data['experience'],
                          description=form.cleaned_data['description'],
-                         user=request.user)
+                         user=request.user,
+                         education_weightage=form.cleaned_data['education_weightage'],
+                         experience_weightage=form.cleaned_data['experience_weightage'],
+                         skills_weightage=form.cleaned_data['skills_weightage'],
+                         education_required=form.cleaned_data['education_required'])
 
             city, state, country = form.cleaned_data['location'].split(",")
             city = city.strip()
