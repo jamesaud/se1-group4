@@ -40,15 +40,16 @@ def get_all_posts(request):
 
     connection_q = Post.objects.all()
 
-    for connection in connections:
-        for post in connection.likes.all():
-            posts.add(post)
-        for post in connection.shares.all():
-            posts.add(post)
-        for post in connection.post_set.all():
-            posts.add(post)
+    if connections.exists():
+        for connection in connections:
+            for post in connection.likes.all():
+                posts.add(post)
+            for post in connection.shares.all():
+                posts.add(post)
+            for post in connection.post_set.all():
+                posts.add(post)
 
-        connection_q |= connection.likes.all() | connection.shares.all() | connection.post_set.all()
+            connection_q |= connection.likes.all() | connection.shares.all() | connection.post_set.all()
 
     for post in user.post_set.all():
         posts.add(post)
