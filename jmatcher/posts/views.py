@@ -71,7 +71,7 @@ def get_all_posts(request):
 
 
     from django.db.models import Q
-    posts = Post.objects.filter(Q(user__in=user.connections.all()) | Q(user=user)) | connection.shares.all() | connection_q
+    posts = Post.objects.filter(Q(user__in=user.connections.all()) | Q(user=user)) | connection_q
     posts = posts.distinct().order_by('-created_at')
 
     page = request.GET.get('page', 1)
