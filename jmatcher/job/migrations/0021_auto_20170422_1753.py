@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -12,10 +11,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='job',
+            name='experience'
+        ),
+        migrations.AddField(
             model_name='job',
             name='experience',
             field=models.IntegerField(default=1),
-            preserve_default=False,
+            preserve_default=False
         ),
     ]

@@ -46,9 +46,36 @@ document.getElementById('id_skill').value+='{{skill.skill}}, ' ;
 
 
 {% block content %}
+
+
+
 <h2>Updating {{ request.user.get_full_name }}</h2>
     <br><br>
     <h3>Your Information</h3>
+
+
+<script>
+    <h3>My Services</h3>
+  {{ work.management_form }}
+
+    var form_array = [0, 1, 2, 3, 4]
+    {% for form in work.forms %}
+        var html = `{{ form | crispy }}`;
+        form_array.append(html);
+    {% endfor %}
+</div>
+
+
+    var index = 0
+    $('#add_more').click(function(){
+    $('#form_set').addhtml(form_array[index])
+        index += 1
+  })
+</script>
+<a type="button" value="add" id="add_more"> add </a>
+
+
+
   <form class="form-horizontal" method="post" action="{% url 'students:update' %}" enctype="multipart/form-data">
       {% csrf_token %}
       {{ user_form | crispy }}
@@ -117,4 +144,6 @@ document.getElementById('id_skill').value+='{{skill.skill}}, ' ;
   </form>
 
 {% endblock content %}
+
+
 

@@ -10,8 +10,10 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
+    url(r'^$', TemplateView.as_view(template_name='pages/index.html'), name='home'),
+    url(r'^login/$', TemplateView.as_view(template_name='pages/index1.html'), name='login'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+
     url(r'^postJob/$', TemplateView.as_view(template_name='job/postJob.html'), name='postJob'),
     url(r'^test/$', TemplateView.as_view(template_name='test.html'), name='test'),
 

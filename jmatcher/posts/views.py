@@ -2,6 +2,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import PostForm, CommentForm
 from .models import Post, PostComments
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 try:
     from django.utils import simplejson as json
@@ -36,6 +38,8 @@ def get_all_posts(request):
     connections = user.connections.all()
     posts = set()
 
+    connection_q = Post.objects.all()
+
     for connection in connections:
         for post in connection.likes.all():
             posts.add(post)
@@ -44,11 +48,43 @@ def get_all_posts(request):
         for post in connection.post_set.all():
             posts.add(post)
 
+        connection_q |= connection.likes.all() | connection.shares.all() | connection.post_set.all()
+
     for post in user.post_set.all():
         posts.add(post)
 
     context = {}
+
+
+    # NEW
+    form = PostForm(request.POST or None)
+    if request.method == "POST":
+        # calling the postform class and it is giving a dictionary and it validates
+        if form.is_valid():
+            post = Post(description=form.cleaned_data['description'], user=request.user)
+            post.save()
+
+    context.update({
+        "form": form,
+    })
+
+
+    from django.db.models import Q
+    posts = Post.objects.filter(Q(user__in=user.connections.all()) | Q(user=user)) | connection.shares.all() | connection_q
+    posts = posts.distinct().order_by('-created_at')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, 10)
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     context['posts'] = posts
+
     return render(request, "posts/showAllPosts.html", context)
 
 
@@ -130,6 +166,13 @@ def share_post(request):
             post.shares.add(user)
             post.save()
 
-        share_button_text = "Shared"
+        else:
+            post.shares.remove(user)
+            post.save()
+
+        if user in post.shares.all():
+            share_button_text = "UnShare"
+        else:
+            share_button_text = "Share"
         response = JsonResponse({'share_button_text': share_button_text})
         return response

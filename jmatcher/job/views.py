@@ -20,7 +20,7 @@ def listJob(request):
     user = request.user
     student = user.student
     applied_jobs = student.applications.all()
-    all_jobs = Job.objects.all()
+    all_jobs = Job.objects.all() 
 
     for job in all_jobs:
         job.match_percent = get_job_match_percent(user.student, job)
@@ -30,7 +30,8 @@ def listJob(request):
         else:
             job.applied = False
 
-    return render(request, 'job/jobList.html', context={'jobs': all_jobs, 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
+    sort = lambda j: j.match_percent
+    return render(request, 'job/jobList.html', context={'jobs': sorted(all_jobs, key=sort, reverse=True), 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
 
 def get_job_match_percent(student, job):
 

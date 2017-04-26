@@ -2,17 +2,39 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-		<a href="{% url 'posts:post_status' %}" class='btn btn-primary'>Create New Post</a>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<form class="form-horizontal" method="post" action="{% url 'posts:get_all_posts' %}">
+		{% csrf_token %}
+
+		<div class='col-sm-7 col-md-9'>
+		{{form|crispy}}
+		</div>
+				<div class='col-sm-5 col-md-3'>
+		<button type='submit' href="{% url 'posts:post_status' %}" class='btn btn-primary' style="display: inline;">Create New Post</button>
+		</div>
+
+	</form>
 		<br>
 		<br>
 		{% if posts %}
 			<ul class='list-group'>
 				{% for post in posts %}
 					<li class='list-group-item'>
-						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5><p>Posted by:
+						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5>
+
+						<p>Posted by:
 							<a href="{{  post.user.get_absolute_url }}">{{post.user.username}}</a>,
 						   {{post.get_comment_count}} Comments, {{post.total_likes}} Likes, {{post.total_shares}} Shares
 						</p>
+
+					<button id="like" post-id='{{post.id}}' class="like btn btn-primary">
+                           {% if request.user not in post.likes.all %} Like {% else %} UnLike {% endif %}
+</button>
+
+					<button id="share" post-id='{{post.id}}' class="share btn btn-warning">
+                        {% if request.user not in post.shares.all %} Share {% else %} UnShare {% endif %}
+</button>
 					</li>
 					<br>
 				{% endfor %}
@@ -20,4 +42,73 @@
 		{% else %}
 			<p>No posts found</p>
 		{% endif %}
+    
+    
+    
+    {% if posts.has_other_pages %}
+  <ul class="pagination">
+    {% if posts.has_previous %}
+      <li class='page-item'><a class="page-link" href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+    {% for i in posts.paginator.page_range %}
+      {% if posts.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li class='page-item'><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+      <li class='page-item'><a class="page-link" href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+    
 {% endblock content %}
+
+
+{% block javascript %}
+{{block.super}}
+<script>
+
+    $(".like").click(function(e){
+		var like = $(this);
+    	$.ajax({
+    		type: "POST",
+    		url: "{% url 'posts:like_post' %}",
+    		data: {"post_id": like.attr('post-id'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    		dataType: "json",
+    		success: function(response) {
+    			like.text(response.like_button_text);
+    		},
+    		error: function(rs, e){
+    			console.log(rs.responseText)
+    		}
+    	});
+
+    	e.preventDefault();
+    });
+
+    $(".share").click(function(e){
+		var share = $(this);
+		$.ajax({
+    		type: "POST",
+    		url: "{% url 'posts:share_post' %}",
+    		data: {"post_id": share.attr('post-id'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    		dataType: "json",
+    		success: function(response) {
+    			share.text(response.share_button_text);
+    		},
+    		error: function(rs, e){
+    			console.log(rs.responseText)
+    		}
+    	});
+
+    	e.preventDefault();
+    });
+
+  </script>
+{% endblock %}

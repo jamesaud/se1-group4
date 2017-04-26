@@ -56,6 +56,5 @@ class ProjectForm(forms.ModelForm):
 
 WorkInlineForm = inlineformset_factory(Student, WorkExperience, form=WorkForm, extra=2)
 EducationInlineForm = inlineformset_factory(Student, Education, form=EducationForm, extra=1, min_num=1)
-
 ProjectInlineForm = inlineformset_factory(Student, Project, form=ProjectForm, extra=1, min_num=1)
 

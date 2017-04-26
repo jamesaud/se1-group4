@@ -2,10 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<form class="form-horizontal" method="post" action="{% url 'posts:post_status' %}">
+<form class="form-horizontal" method="post" action="{% url 'posts:post_status' %}" style="display: inline;">
 	{% csrf_token %}
 	{{ form|crispy }}
-	<div class="control-group">
+	<div class="control-group"> 
 	  <div class="controls">
 	    <button type="submit" class="btn btn-primary">Create</button>
 	  </div>
