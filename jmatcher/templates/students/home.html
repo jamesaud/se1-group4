@@ -42,19 +42,19 @@
 
             {% for work in object.workexperience_set.all %}
                 <li class="list-group-item" style="border-top: 3px double darkgrey;">
-                    <strong>Title: </strong>{{ work.title }}
+                     <strong>Title: </strong>{{ work.title }}
                 </li>
                 <li class="list-group-item">
-                    <strong>Position:</strong> {{ work.position }}
+                     <strong>Position:</strong> {{ work.position }}
                 </li>
                 <li class="list-group-item">
                     <strong>Date Started:</strong> {{ work.start_date }}
                 </li>
                 <li class="list-group-item">
-                    <strong>Date Ended:</strong> {{ work.end_date }}
+                     <strong>Date Ended:</strong> {{ work.end_date }}
                 </li>
                 <li class="list-group-item">
-                    <strong>Description:</strong> {{ work.description }}
+                      <strong>Description:</strong> {{ work.description }}
                 </li>
             {% endfor %}
     </ul>

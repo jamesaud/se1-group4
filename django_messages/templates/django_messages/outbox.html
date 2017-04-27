@@ -13,12 +13,12 @@
     <tbody>
 {% for message in message_list %}
     <tr>
-        <td>{{ message.recipient }}</td>
+        <td><b>{{ message.recipient }}</b></td>
         <td>
-        <a href="{{ message.get_absolute_url }}"><i>{{ message.subject }}</i></a>
+            <a href="{{ message.get_absolute_url }}"><i><b>{{ message.subject }}</b></i></a>
         </td>
         <td>{{ message.sent_at|date:_("DATETIME_FORMAT")}}</td>
-        <td><a href="{% url 'messages_delete' message.id %}?next={% url 'messages_outbox' %}">{% trans "Delete" %}</a></td>
+        <td><a href="{% url 'messages_delete' message.id %}?next={% url 'messages_outbox' %}"><b>{% trans "Delete" %}</b></a></td>
     </tr>
 {% endfor %}
     </tbody>
