@@ -1,5 +1,6 @@
 {% extends "base_profile.html" %}
 {% load crispy_forms_tags %}
+{% load humanize %}
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,7 +20,10 @@
 			<ul class='list-group'>
 				{% for post in posts %}
 					<li class='list-group-item'>
-						<h5><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a></h5>
+						<h5 style="display:inline-block;"><a href="{% url 'posts:get_post' post.id %}">{{post.description}}</a> </h5>
+						                 <small class="pull-right" style="color: lightslategray;">{{ post.updated_at | naturaltime }}</small>
+
+
 
 						<p>Posted by:
 							<a href="{{  post.user.get_absolute_url }}">{{post.user.username}}</a>,
