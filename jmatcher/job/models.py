@@ -2,7 +2,7 @@ from time import timezone
 from django.db import models
 from django import forms
 from jmatcher.users.models import User, Skill
-from jmatcher.students.models import Student
+from jmatcher.students.models import Student, LevelChoices
 
 '''
 TODO:
@@ -37,6 +37,7 @@ class Job(models.Model):
     education_weightage = models.IntegerField(default=34)
     experience_weightage = models.IntegerField(default=33)
     skills_weightage = models.IntegerField(default=33)
+    education_required = models.CharField(choices=LevelChoices.Choices, max_length=80)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

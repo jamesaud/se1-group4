@@ -17,8 +17,8 @@ class LevelChoices:
     PHD = 'PHD'
 
     Choices = (
-        (UNDERGRAD, 'Intern'),
-        (GRAD, 'Full Time'),
+        (UNDERGRAD, 'Undergraduate'),
+        (GRAD, 'Graduate'),
         (PHD, 'PHD')
     )
 
