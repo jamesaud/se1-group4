@@ -19,7 +19,7 @@
  <section class="search-form">
     <form method="GET" name="search" role="search" action="{% url 'search:search' %}">
       <p class="inp-wrap search-wrap">
-        <input type="search" name="q" id="search-field" class="grid-95" placeholder="e.g. Software Engineer" /></p>
+        <input type="search" name="q" id="search-field" class="grid-95" placeholder="e.g. Software Engineer" required></p>
       <p class="inp-wrap cat-wrap">
         <!--<label for="categories" class="grid-30">in</label>-->
         <select name="location" id="location" class="grid-100">
@@ -34,8 +34,9 @@
         {% for position in positions %}
           <option value='{{position.0}}' selected>{{position.1}}</option>
         {% endfor %}
+            <option value = null selected> </option>
         </select>
-        </p>
+        </option>
       <p class="inp-wrap submit-wrap">
         <button class="grid-100 btn-search">
           <span class="search-icon-container"><?xml version="1.0" encoding="utf-8"?>
@@ -55,7 +56,6 @@
 
 
 <br>
-<h2>All Job Matches For You</h2>
 <br>
 
   {% if jobs %}
@@ -95,5 +95,25 @@
       <p> No jobs have been posted. </p>
 
   {% endif %}
-
+          <nav>
+ <ul class="pagination">
+    {% if jobs.has_previous %}
+      <li class = "page-item"><a class = "page-link" href="?page={{ jobs.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled page-item" ><a class = "page-link">&laquo;</a></li>
+    {% endif %}
+    {% for i in jobs.paginator.page_range %}
+      {% if jobs.number == i %}
+        <li class="disabled page-item"><a class = "page-link"> {{ i }} <span class="sr-only page-item">(current)</span></a></li>
+      {% else %}
+        <li class = "page-item"><a class = "page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if jobs.has_next %}
+      <li class = "page-item"><a class = "page-link" href="?page={{ jobs.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled page-item"><a class = "page-link">&raquo;</a></li>
+    {% endif %}
+  </ul>
+  </nav>
 {% endblock content %}

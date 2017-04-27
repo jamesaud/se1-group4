@@ -31,7 +31,7 @@ def listJob(request):
             job.applied = False
 
     sort = lambda j: j.match_percent
-    return render(request, 'job/jobList.html', context={'jobs': sorted(all_jobs, key=sort, reverse=True), 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
+    return render(request, 'job/jobList.html', context={'jobs': jobPaginate(request, sorted(all_jobs, key=sort, reverse=True), 5), 'locations': Location.objects.all(), 'positions': Job.EMPLOYMENT_TYPE})
 
 def get_job_match_percent(student, job):
 
@@ -60,7 +60,6 @@ def postJob(request):
     if request.method == 'GET':
         context = {}
         context['employer'] = form
-
         return render(request, template_name='job/postJob.html', context=context)
 
     elif request.method == 'POST':
@@ -126,6 +125,7 @@ def employerPost(request):
     jobs = user.job_set.all()
     for job in jobs:
         job.total_applications = job.total_applications()
+    jobs = jobPaginate(request, jobs, 5)
     context['jobs'] = jobs
     return render(request, template_name='job/employerPost.html', context=context)
 
@@ -158,18 +158,45 @@ def jobDelete(request, job_id):
     job = Job.objects.get(pk=job_id)
     job.delete()
     messages.error(request, 'Deleted Job')
-    return redirect('job:jobList')
+    return redirect('job:employerPost')
 
 
 def jobEdit(request, job_id):
+    print(job_id)
     job = Job.objects.get(pk=job_id)
-    form = jobForm(request.POST or None, instance=job)
-    if (request.method == 'POST') and form.is_valid():
-        for key, value in form.cleaned_data.items():
-            setattr(job, key, value)
-        job.save()
+    print(job_id)
+    if request.method == 'POST':
+        form = jobForm(request.POST or None, instance=job)
+        print(job_id)
+        if form.is_valid():
+            city, state, country = form.cleaned_data['location'].split(",")
+            city = city.strip()
+            state = state.strip()
+            country = country.strip()
+
+            try:
+                location_object = Location.objects.get(city=city, state=state, country=country)
+            except Location.DoesNotExist as e:
+                location_object = Location(city=city, state=state, country=country)
+                location_object.save()
+            job.location = location_object
+
+            for skill in form.cleaned_data['skill'].split(","):
+                skill = skill.strip().lower()
+                try:
+                    skill_object = Skill.objects.get(skill=skill)
+                except Skill.DoesNotExist as e:
+                    skill_object = Skill(skill=skill)
+                    skill_object.save()
+                job.skills.add(skill_object)
+
+            job.save()
+        print(job_id)
         return redirect('job:job_detail', job_id=job_id)
-    return render(request, template_name='job/postJob.html', context={'employer': form})
+    else:
+        print("IN ELSE STATEMENT")
+        form = jobForm(instance=job)
+    return render(request, template_name='job/editJob.html', context={'employer': form, 'job': job})
 
 def jobApply(request, job_id):
     job = Job.objects.get(pk=job_id)

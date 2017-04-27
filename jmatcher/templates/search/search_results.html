@@ -26,7 +26,7 @@
                               </div>
                               <div class="info">
                                 <span class="job_title"><a href = "{% url 'job:job_detail' result.id %}"> {{result.post_name}}</a></span>
-                                <span class="job_info">{{result.user.employer.company_name}} <span>&bull;</span> {{result.location.city}} <span>&bull;</span> {{result.created_at}}</span>
+                                <span class="job_info">{{result.user.company_name}} <span>&bull;</span> {{result.location.city}} <span>&bull;</span> {{result.created_at}}</span>
                               </div>
                                 {% if result.employment_type == "FULL_TIME" %}
                                     <span class="job_type full_time">{{result.employment_type}}</span>
@@ -42,12 +42,6 @@
     {% else %}
       <p> No results of employers found. </p>
         {% endif %}
-
-
-          <p> search result for student </p>
-            {%  for user in found_student_entries %}
-                {{user.get_full_name}}
-            {% endfor %}
 
  <nav>
  <ul class="pagination">

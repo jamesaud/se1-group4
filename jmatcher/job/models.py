@@ -9,9 +9,9 @@ TODO:
     New Models for IndustryType, Location and Employement
 '''
 class Location(models.Model):
-    city = models.CharField(max_length=200)
-    state = models.CharField(max_length=200)
-    country = models.CharField(max_length=200)
+    city = models.CharField(max_length=200, null= True, blank = True)
+    state = models.CharField(max_length=200, null =True, blank = True)
+    country = models.CharField(max_length=200, null = True, blank = True)
 
 class Job(models.Model):
 
@@ -26,9 +26,9 @@ class Job(models.Model):
     )
 
     post_name = models.CharField(max_length=200, null=True)
-    employment_type = models.CharField(max_length = 200, null = True, choices = EMPLOYMENT_TYPE);
+    employment_type = models.CharField(max_length = 200, null = True, choices = EMPLOYMENT_TYPE)
     industry =  models.CharField(max_length = 200, null = True, choices = INDUSTRY_TYPE)
-    location = models.ForeignKey(Location, related_name='location', null=True)
+    location = models.ForeignKey(Location, related_name='location', null=True, blank=True)
     experience = models.IntegerField()
     description = models.TextField(null=True)
     user = models.ForeignKey(User)

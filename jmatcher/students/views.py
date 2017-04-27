@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
 
+
 def index(request):
     return HttpResponse("MADE IT!")
 
@@ -33,6 +34,7 @@ class SignUp(SignupView):
         return response
 
 def students(request):
+
     return render(request, 'students/student_list.html', context={'student_list':Student.objects.exclude(skills__isnull=True)})
 
 

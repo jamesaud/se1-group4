@@ -33,27 +33,24 @@ def searchUser(request):
 
 def search(request):
 
-    location, employment_type = request.GET.get('location'), request.GET.get('employment_type')
-    location = Location.objects.get(pk=location)
-    dict = {'location': location, 'employment_type': employment_type}
-
+    location, employment_type = request.GET['location'], request.GET['employment_type']
+    print("location is " + location)
+    print("employerment type is " + employment_type)
     entry_query_job = None
     query_string = None
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         entry_query_job = get_query(query_string, ['post_name', 'description', ])
 
-    
-    for key, value in list(dict.items()):
-        if value is None:
-            del dict[key]
-
-    if entry_query_job:
-        found_job_entries = Job.objects.filter(entry_query_job, location=location, employment_type=employment_type)
+    if (location =='9') and (employment_type == 'null'):
+        found_job_entries = Job.objects.filter(entry_query_job)
+    elif location == '9':
+        found_job_entries = Job.objects.filter(entry_query_job, employment_type = employment_type)
     else:
-        found_job_entries = Job.objects.filter(location=location, employment_type=employment_type)
+        location = Location.objects.get(pk=location)
+        found_job_entries = Job.objects.filter(entry_query_job, location=location, employment_type=employment_type)
     
-    found_job_entries = jobPaginate(request, found_job_entries.all(), 3)
+    found_job_entries = jobPaginate(request, found_job_entries.all(), 5)
     context = {}
     context['dict'] = dict
     context['query_string'] = query_string

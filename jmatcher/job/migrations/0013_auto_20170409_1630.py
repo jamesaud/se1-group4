@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='job',
             name='location',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='location', to='job.Location'),
+            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, related_name='location', to='job.Location'),
             preserve_default=False,
         ),
     ]
