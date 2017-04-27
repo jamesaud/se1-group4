@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-
-
-
+{% load static %}
+<link href="{% static 'css/project.css' %}" rel="stylesheet">
 
 {% block content-wrapper %}
     <div class="container">
@@ -46,21 +45,21 @@
 
                       {% if request.user.is_student %}
                         <ul class="dc ayn">
-                          <h6>Recent Post</h6>
+                            <h6><font color="#0275d8">Recent Post</font></h6>
                           {% with post=request.user.post_set.first %}
-                          <li><span class="axr h bbu agc"></span><i>{{post.description}}</i></li>
+                              <li>&#9679; &nbsp; <font color="red">{{post.description}}</font></li>
                           {% endwith %}
-                            <h6>Recent Connection</h6>
+                            <h6><font color="#0275d8">Recent Connection</font></h6>
                           {% with connection=request.user.connections.first %}
-                            <li><span class="axr h bbu agc"></span><i href="#"><a href='{{connection.get_absolute_url}}'>{{connection.get_name}}</a></i></li>
+                              <li>&#9679; &nbsp;<font color="red"><i href="#"><a href='{{connection.get_absolute_url}}'>{{connection.get_name}}</a></i></font></li>
                           {% endwith %}
-                          <h6>Recent Education</h6>
+                            <h6><font color="#0275d8">Recent Education</font></h6>
                           {% with education=request.user.student.education_set.first %}
-                          <li><span class="axr h bbu agc"></span><i>{{education.level}}</i> at <i>{{education.institution_name}}</i></li>
+                              <li>&#9679; &nbsp;<font color="red"><i>{{education.level}}</i> at <i>{{education.institution_name}}</i></font></li>
                           {% endwith %}
-                          <h6>Recent Work</h6>
+                            <h6><font color="#0275d8">Recent Work</font></h6>
                           {% with work=request.user.student.workexperience_set.first %}
-                          <li><span class="axr h bbu agc"></span><i href="#">{{work.title}}</i> as {{work.position}}</li>
+                              <li>&#9679; &nbsp;<font color="red"><i href="#">{{work.title}}</i> as {{work.position}}</font></li>
                           {% endwith %}
 
                           

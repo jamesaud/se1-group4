@@ -118,13 +118,13 @@
               {% else %}
 
                 <li class="nav-item">
-                  <a id="sign-up-link" class="nav-link" href="{% url 'students:account_signup' %}">{% trans "Student Sign Up" %}</a>
+                    <a id="sign-up-link" class="nav-link" href="{% url 'students:account_signup' %}"><font color="#fed136">{% trans "Student Sign Up" %}</font></a>
                 </li>
                   <li class="nav-item">
-                  <a id="sign-up-link" class="nav-link" href="{% url 'employers:account_signup' %}">{% trans "Employer Sign Up" %}</a>
+                      <a id="sign-up-link" class="nav-link" href="{% url 'employers:account_signup' %}"><font color="#fed136">{% trans "Employer Sign Up" %}</font></a>
                 </li>
                 <li class="nav-item">
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+                    <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}"><font color="#fed136">{% trans "Sign In" %}</font></a>
                 </li>
               {% endif %}
             </ul>

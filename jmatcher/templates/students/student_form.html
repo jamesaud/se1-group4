@@ -95,7 +95,7 @@ document.getElementById('id_skill').value+='{{skill.skill}}, ' ;
         {{ form | crispy }}
 
         {% if form.pk %} {# empty forms do not have a pk #}
-             <tr><th>Delete?</th><td>{{field.DELETE}}</td></tr>
+             <tr><th><font color="red">Delete?</font></th><td>{{field.DELETE}}</td></tr>
         {% endif %}
         </table>
 
@@ -136,8 +136,9 @@ document.getElementById('id_skill').value+='{{skill.skill}}, ' ;
 
         <div class="control-group">
           <div class="controls">
-            <button type="submit" class="btn">Update</button>
+           <center> <button type="submit" class="btn btn-primary">Update</button></center>
           </div>
+            <br> <br>
         </div>
 
 
