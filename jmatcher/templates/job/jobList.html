@@ -71,13 +71,12 @@
                                 <span class="job_title"><a href = "{% url 'job:job_detail' job.id %}"> {{job.post_name}}</a></span>
                                 <span class="job_info">{{job.user.employer.company_name}} <span>&bull;</span> {{job.location.city}},{{job.location.state}} <span>&bull;</span> {{job.created_at|date:'D-F-o'}}</span>
                               </div>
-
                                 {% if job.employment_type == 'FULL_TIME' %}
                                     <span class="job_type full_time">{{job.employment_type}}</span>
                                 {% else %}
                                     <span class="job_type part_time">{{job.employment_type}}</span>
                                 {% endif%}
-                              <span class="job_type freelance">{{job.match_percent|floatformat}}% Match</span>
+                              <span class="job_type freelance">{{job.match_percent|floatformat:"0"}}% Match</span>
                               {% if job.applied %}
                                   <span class="apply_span" id="{{job.id}}">
                                   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Applied

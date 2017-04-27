@@ -25,7 +25,7 @@
                                 <span class="job_title"><a href = "{{application.student.user.get_absolute_url}}"> {{application.student.user.get_name}}</a></span>
                                 <span class="job_info"> Looking for {{application.student.position}}</span>
                               </div>
-                              <span class="job_type freelance">{{application.match_percent|floatformat}}% Match
+                              <span class="job_type freelance">{{application.match_percent|floatformat:"0"}}% Match
                               </span>
                               {% if application.attachment %}
                                 <span class="apply_span">
